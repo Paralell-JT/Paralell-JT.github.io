@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TanJ_Blog</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="TanJ_Blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="第四章-内存管理 内存管理概述 存储器的层次结构  程序的装入与链接  程度的链接  静态链接方式：在 程序运行之前 ， 将各目标模块及它们所需的库函数链接成一个完整的装配模块，以后不再拆开 ，需进行（1） 相对地址修改 （2） 变换外部调用模块 ，如上图中 jmp(L)、jmp(L+M)等 装入时动态链接：在 装入内存时 ，采用 边装入边链接的链接方式 ，即在装入一个目标模块时， 若发生一个外部">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TanJ_Blog">
+<meta property="og:url" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="TanJ_Blog">
+<meta property="og:description" content="第四章-内存管理 内存管理概述 存储器的层次结构  程序的装入与链接  程度的链接  静态链接方式：在 程序运行之前 ， 将各目标模块及它们所需的库函数链接成一个完整的装配模块，以后不再拆开 ，需进行（1） 相对地址修改 （2） 变换外部调用模块 ，如上图中 jmp(L)、jmp(L+M)等 装入时动态链接：在 装入内存时 ，采用 边装入边链接的链接方式 ，即在装入一个目标模块时， 若发生一个外部">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-938734-705166.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-555740-312955.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-697877-998860.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-131273-651599.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-216080-913828.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-442193-400363.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-757693-793379.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-650152-402651.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-878005-685023.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-55909-558347.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-297654-675173.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-368198-414060.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-434972-501493.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-544085-316727.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-737591-299785.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-967302-255534.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-752008-294277.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-511291-829933.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-627982-221221.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-809709-708780.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-658362-480856.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-95026-917233.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-491499-254970.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-132784-677845.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-750216-12435.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-678-910519.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-826367-196859.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-712595-679658.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-192922-398345.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-679994-450605.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-244609-873756.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-558182-348687.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-243011-788833.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-36855-195275.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-676845-284340.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-234374-115418.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-249350-690943.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-399235-258608.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-758509-415285.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-408801-908533.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-435545-362072.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-542015-298908.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-67428-310827.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-28558-147362.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-820765-749558.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-718265-834081.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-119338-650790.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-262759-908379.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-841755-159374.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-775815-444089.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-354618-801117.jpg">
+<meta property="article:published_time" content="2024-02-27T14:01:09.853Z">
+<meta property="article:modified_time" content="2024-02-27T04:07:52.000Z">
+<meta property="article:author" content="Tan J">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-938734-705166.jpg">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>Tan J</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="github"
+               href="https://github.com/Paralell-JT"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="email"
+               href="mailto:2542608082@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="qq"
+               href="http://wpa.qq.com/msgrd?v=3&uin=2542608082&site=qq&menu=yes"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-qq"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="neteasemusic"
+               href="https://music.163.com/#/user/home?id=419480693"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-neteasemusic"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(10)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="OS">
+            
+            OS
+            <small>(4)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  site_url"
+               
+               href="/about">About</a>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="10">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>OS</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All "
+           href="/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2024-02-27 22:01:09">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2024-02-27 22:00:45">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="OS_第五章设备管理">OS_第五章设备管理</span>
+            <span class="post-date" title="2024-02-27 21:59:32">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All OS "
+           href="/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS_第四章内存管理">OS_第四章内存管理</span>
+            <span class="post-date" title="2024-02-27 21:58:12">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%89%E7%AB%A0%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81/%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2024-02-27 21:57:00">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All OS "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%89%E7%AB%A0%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS_第三章处理机调度与死锁">OS_第三章处理机调度与死锁</span>
+            <span class="post-date" title="2024-02-27 21:54:59">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2024-02-27 21:54:02">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All OS "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS_第二章进程管理">OS_第二章进程管理</span>
+            <span class="post-date" title="2024-02-27 21:52:08">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All OS "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS_第一章绪论">OS_第一章绪论</span>
+            <span class="post-date" title="2024-02-27 21:18:31">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/23/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2024-02-23 20:59:24">2024/02/23</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-OS-第五章设备管理/第五章-设备管理" class="article article-type-post" itemscope itemprop="blogPost">
+    
+    <div class="article-meta">
+        
+        
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2024-02-27 12:07:52'>2024-02-27 22:00</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86"><span class="toc-text">第五章-设备管理</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="第五章-设备管理"><a href="#第五章-设备管理" class="headerlink" title="第五章-设备管理"></a>第五章-设备管理</h1><ul>
+<li>I&#x2F;O系统组成<ul>
+<li>I&#x2F;O系统结构<ul>
+<li>微机总线型I&#x2F;O系统结构 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-870774-105018.jpg" alt="图片"></li>
+<li>主机通道型I&#x2F;O系统结构 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-789475-888879.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>I&#x2F;O设备分类及接口<ul>
+<li>按 <strong>数据传输速率</strong> 分类<ul>
+<li>高速设备</li>
+<li>中速设备</li>
+<li>低速设备</li>
+</ul>
+</li>
+<li>按 <strong>信息交换单位</strong> 分类<ul>
+<li>块设备（传输速度高，可寻址、DMA方式 <strong>例如磁盘</strong> ）</li>
+<li>字符设备（传输速率低、不可寻址、中断方式 <strong>例如鼠标、键盘</strong> ）</li>
+</ul>
+</li>
+<li>按 <strong>设备共享属性</strong> 分类<ul>
+<li>独占设备</li>
+<li>共享设备</li>
+<li>虚拟设备</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>设备控制器（ <strong>IO设备由机械部分和电子部件组成，机械部分：执行I&#x2F;O操作；电子部件：I&#x2F;O控制器，设备控制器</strong> ）<ul>
+<li>设备控制器的功能<ul>
+<li>接收和识别命令（ <strong>控制寄存器&#x2F;命令译码器</strong> ）：如CPU发来的read&#x2F;write命令，I&#x2F;O控制器中会有响应的 <strong>控制寄存器来存放命令和参数</strong></li>
+<li>数据交换（ <strong>数据寄存器</strong> ）： <strong>I&#x2F;O控制器中</strong> 会 <strong>设置相应的数据寄存器</strong> ， <strong>输出时</strong> ，数据寄存器用于暂存CPU发来的数据，之后再由控制器送出数据； <strong>输入时</strong> ，数据寄存器用于暂存设备发来的数据，之后CPU从数据寄存器中取走数据</li>
+<li>标识和报告设备状态（ <strong>状态寄存器</strong> ）： <strong>I&#x2F;O控制器中会有相应的状态寄存器，用于记录I&#x2F;O设备的当前状态</strong> ，1表示空闲，0表示忙碌</li>
+<li>地址识别（ <strong>地址译码器</strong> ）： <strong>为了区分设备控制器中的各个寄存器，故也需要给各个寄存器设置一个特定的地址</strong> ；I&#x2F;O控制器通过CPU提供的地址来判断 <strong>CPU要读写哪个寄存器</strong></li>
+<li>数据缓冲（ <strong>缓冲器</strong> ）</li>
+<li>差错控制（ <strong>差错检查码</strong> ）</li>
+</ul>
+</li>
+<li>设备控制器的组成 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-733384-431403.jpg" alt="图片"><ul>
+<li>CPU与控制器的接口部分（ <strong>三线、3寄存器1 I&#x2F;O逻辑</strong> ）<ul>
+<li>三线（ <strong>数据总线（双向）、地址线（单向）、控制线（单向）</strong> ）<ul>
+<li>数据总线： <strong>CPU</strong> 读写 <strong>数据</strong> 从 <strong>数据寄存器</strong></li>
+<li>地址线： <strong>CPU</strong> 指定读写设备的 <strong>地址</strong> 到 <strong>I&#x2F;O逻辑</strong></li>
+<li>控制线： <strong>CPU</strong> 发出 <strong>命令</strong> 到 <strong>I&#x2F;O逻辑</strong></li>
+</ul>
+</li>
+<li>三寄存器<ul>
+<li>数据寄存器：暂存CPU的读&#x2F;写数据（ <strong>双向</strong> ）</li>
+<li>控制寄存器：存放CPU发来的命令和参数（ <strong>CPU到控制寄存器</strong> ）</li>
+<li>状态寄存器：反馈状态的设备到CPU（ <strong>状态寄存器到CPU</strong> ）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>I&#x2F;O逻辑部分： <strong>负责接收和识别CPU发来的各种命令，并负责对设备发号施令，相当于I&#x2F;O控制器中的“CPU”</strong> ， <strong>作为CPU和设备之间的桥梁</strong></li>
+<li>控制器与设置的接口部分<ul>
+<li>数据总线( <strong>双向</strong> )：传送输入输出 <strong>数据</strong>  <strong>到I&#x2F;O逻辑</strong></li>
+<li>状态线（ <strong>单向</strong> ）：反馈设备 <strong>当前状态</strong> 到 <strong>I&#x2F;O逻辑</strong></li>
+<li>控制线（ <strong>单向</strong> ）： <strong>I&#x2F;O控制器</strong> 向 <strong>设备</strong> 发出 <strong>控制信息</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>I&#x2F;O通道<ul>
+<li>I&#x2F;O通道的引入<ul>
+<li><strong>主要目的在于提高I&#x2F;O过程的独立性</strong> ，不仅使数据的传送能独立于CPU，而且使有关I&#x2F;O操作的组织、管理与结束尽量独立，从而 <strong>保证CPU有更多的时间进行数据处理；</strong></li>
+<li><strong>通道作为特殊的处理机</strong> ，其 <strong>指令类型单一、无专有内存（有CPU共享内存）</strong> ， <strong>通过执行通道I&#x2F;O程序来控制I&#x2F;O操作；</strong></li>
+<li>设置通道后， <strong>CPU只需向通道发出一条I&#x2F;O指令</strong> ； <strong>通道收到该指令后，便从内存取出本次要执行的通道程序并予执行；仅当其完成规定的I&#x2F;O任务后，才向CPU发出中断信号</strong></li>
+</ul>
+</li>
+<li>通道指令与通道程序<ul>
+<li>通道指令：读写指令、控制指令</li>
+<li>通道程序：通道指令的逻辑集合，由设备驱动程序自动生成，存放于内存特定区域</li>
+</ul>
+</li>
+<li>通道类型<ul>
+<li>字节多路通道（ <strong>低、中速  I&#x2F;O</strong> ）：含有 <strong>许多非分配型子通道</strong> 分别连接在 <strong>低、中速I&#x2F;O设备</strong> 上，子通道 <strong>按时间片轮转方式共享主通道</strong> ，按 <strong>字节方式</strong> 进行数据传送 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-917330-464705.jpg" alt="图片"></li>
+<li>数组选择通道（ <strong>高速   I&#x2F;O</strong> ）： <strong>只含有一个分配型子通道</strong> ，一段时间内只能 <strong>执行一道通道程序</strong> 、控制一台设备按 <strong>数组方式</strong> 进行数据传送， <strong>通道独占且利用率低，用于连接多台高速设备</strong></li>
+<li>数组多路通道（ <strong>中、高速 I&#x2F;O</strong> ）：含有 <strong>多个非分配型子通道</strong> 分别连接在 <strong>高、中速I&#x2F;O设备上</strong> ，子通道 <strong>按时间片轮转方式共享主通道</strong> ，按 <strong>数组方式</strong> 进行数据传送</li>
+</ul>
+</li>
+<li>通道瓶颈问题和解决方案：<ul>
+<li>瓶颈问题： <strong>通道贵，数量少，造成系统的吞吐量下降</strong> <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-811727-624679.jpg" alt="图片"></li>
+<li>解决方案： <strong>增加设备到主机间的通路而不增加通道</strong> <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-653036-573559.jpg" alt="图片"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>I&#x2F;O控制方式<ul>
+<li>程序直接控制方式 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-236719-958758.jpg" alt="图片"><ul>
+<li><strong>CPU在设备状态就绪之前，不断地轮询设备状态</strong> ， <strong>干预频率很频繁</strong></li>
+<li><strong>数据流向：I&#x2F;O设备 -&gt; CPU -&gt; 内存 （读）</strong> </li>
+<li><strong>每次读&#x2F;写一个字</strong></li>
+<li><strong>CPU与I&#x2F;O设备只能串行工作，CPU需要一直轮询检查，长期处理”忙等”状态，CPU利用率低下</strong></li>
+</ul>
+</li>
+<li>中断驱动控制方式 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-327966-31236.jpg" alt="图片"><ul>
+<li><strong>CPU不再需要轮询设备状态，设备准备就绪后给CPU发出一个中断信号,在设备未就绪时，CPU可以干其他事</strong></li>
+<li><strong>数据流向：I&#x2F;O设备 -&gt; CPU -&gt; 内存 （读）</strong></li>
+<li><strong>每次读&#x2F;写一个字</strong></li>
+<li><strong>CPU和I&#x2F;O设备可以并行工作，CPU利用率得到明显提升，但频繁的中断处理会消耗较多的CPU时间</strong></li>
+</ul>
+</li>
+<li>DMA方式（直接内存存取型I&#x2F;O控制方式）<ul>
+<li>DMA控制器 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-820840-128864.jpg" alt="图片"></li>
+<li>DMA控制方式 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-575301-11904.jpg" alt="图片"><ul>
+<li>仅在传送 <strong>一个或多个数据块</strong> 的 <strong>开始和结束</strong> 时， <strong>需要CPU干预</strong></li>
+<li><strong>数据流向：I&#x2F;O设备 -&gt; 内存 （不再需要经过CPU）</strong></li>
+<li><strong>每次读写一个或多个块（必须是连续的多个块，之后在内存中也是连续的）</strong></li>
+<li><strong>CPU介入的频率进一步降低，传送数据的单位可以是一个或多个块；缺点：只能读写一个&#x2F;多个连续的块，若要读写多个离散的数据块，CPU需要发出多条I&#x2F;O指令，进行多次中断完成。</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>通道型控制方式 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-780519-95881.jpg" alt="图片"><ul>
+<li><strong>只有在一组数据块传送前后才需要CPU干预</strong></li>
+<li><strong>数据流向：I&#x2F;O设备 -&gt;  内存</strong></li>
+<li><strong>每次读写一组数据块</strong></li>
+<li><strong>CPU、通道、I&#x2F;O设备均可并行工作，利用率很高</strong></li>
+</ul>
+</li>
+<li><strong>总结：</strong> <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-200031-442543.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>设备管理目标、功能及结构<ul>
+<li><strong>设备管理的目标</strong> ：设备管理程序用于控制与管理实现信息输入、输出和存储的设备； <strong>主要目标包括</strong> ：方便用户使用；提高系统I&#x2F;O效率；设备管理的可扩充性，包括设备的增加和删除以及对新的设备类型的适应性</li>
+<li><strong>设备管理的功能</strong> ：<ul>
+<li>提供设备使用的用户接口：命令接口和编程接口</li>
+<li>设备分配和释放：分配设备及相应的通道、设备控制器</li>
+<li>设备的访问和控制：并发访问及差错处理</li>
+<li>I&#x2F;O缓冲和调度：提高I&#x2F;O访问效率，缓解CPU与外设矛盾</li>
+</ul>
+</li>
+<li><strong>设备管理的层次结构</strong> <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-929496-307290.jpg" alt="图片"><ul>
+<li>用户空间I&#x2F;O请求支持层： <strong>提供对逻辑设备的控制</strong><ul>
+<li><strong>针对用户接口</strong> ，提供抽象的命令，如Open, Close, Read, Write</li>
+<li><strong>针对通信设备</strong> ，提供通信体系结构如网络协议栈</li>
+<li><strong>针对文件存储设备</strong> ，提供文件系统的逻辑结构控制</li>
+</ul>
+</li>
+<li>设备独立性软件层： <strong>逻辑设备与物理设备间过渡协调机构</strong> ，实现用户命令到设备操作序列的转换，提供缓冲机制</li>
+<li>设备调度与控制层： <strong>实现硬件物理设备</strong> 的设备驱动、设备控制、状态维护、中断处理及并发I&#x2F;O访问调度</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>缓冲管理<ul>
+<li>缓冲技术的引入（ <strong>缓冲区可以由专门的硬件寄存器（如联想寄存器）组成，也可以利用内存作为缓冲区</strong> ）<ul>
+<li>缓和CPU和I&#x2F;O设备速度不匹配的矛盾</li>
+<li><strong>减少对CPU的中断频率，放宽对中断响应时间的限制</strong> <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-683338-395991.jpg" alt="图片"></li>
+<li>提高CPU与I&#x2F;O设备之间的并行性</li>
+</ul>
+</li>
+<li>单缓冲 <strong>[Max（C,T)+M]</strong> <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-165576-382086.jpg" alt="图片"></li>
+<li>双缓冲 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-492580-870824.jpg" alt="图片"> <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-121374-450134.jpg" alt="图片"></li>
+<li>循环缓冲 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-729215-215375.jpg" alt="图片"><ul>
+<li>缓冲区的使用及进程同步： <strong>取缓冲区（空&#x2F;满）：</strong> GetBuf (BufType, Current)过程 <strong>；</strong>  <strong>释放缓冲区（空&#x2F;满）：</strong> ReleaseBuf (BufType, Current) 过程</li>
+<li>进程同步： <strong>Nexti 指针追赶上Nextg 指针时，输入进程应阻塞</strong> ，直至计算进程把某满缓冲区数据取走并调用ReleaseBuf 过程将之唤醒； <strong>Nextg指针追赶上 Nexti指针时，计算进程应阻塞</strong> ，直至输入进程装满某空缓冲区并调用ReleaseBuf 过程将之唤醒</li>
+</ul>
+</li>
+<li>缓冲池<ul>
+<li>缓冲池的组成（ <strong>三个队列四种工作缓冲区</strong> ）<ul>
+<li>三个队列<ul>
+<li>空缓冲队列：空缓冲</li>
+<li>输入队列：装有输入数据的缓冲队列</li>
+<li>输出队列：装有输出数据的缓冲队列</li>
+</ul>
+</li>
+<li>四种工作缓冲区 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-165156-723338.jpg" alt="图片"><ul>
+<li>用于 <strong>收容输入数据</strong> 的工作缓冲区 <strong>Hin</strong> ：输入进程请求输入数据</li>
+<li>用于 <strong>提取输入数据</strong> 的工作缓冲区 <strong>Sin</strong> ：计算进程请求取得一块输入数据</li>
+<li>用于 <strong>收容输出数据</strong> 的工作缓冲区 <strong>Hout</strong> ：计算进程将处理后的一块数据放入输出数据</li>
+<li>用于 <strong>提取输出数据</strong> 的工作缓冲区 <strong>Sout</strong> ：输出进程请求输出数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>GetBuf过程和PutBuf过程 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-362770-765106.jpg" alt="图片"></li>
+<li>缓冲队列的组织形式 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-491944-787475.jpg" alt="图片"><ul>
+<li><strong>收容输入</strong> ： <strong>输入进程调用GetBuf(emq，Hin)</strong> , <strong>从空缓冲队列的队首取下一块空缓冲区</strong> ， <strong>把它作为收容输入工作缓冲区Hin</strong> ， <strong>然后把数据输入其中</strong> ，装满后； <strong>调用PutBuf(Inq，Hin)，将收容工作缓冲区Hin挂在输入队列Inq上</strong></li>
+<li><strong>提取输入</strong> ： <strong>计算进程调用GetBuf(inq，Sin),从输入队列队首取下一块输入缓冲区，将它作为提取输入工作缓冲区Sin，计算进程从中提取数据</strong> ，提取完之后； <strong>调用PutBuf(emq,Sin),将提取输入缓冲区Sin挂在空缓冲队列上</strong></li>
+<li><strong>收容输出</strong> ： <strong>计算进程调用GetBuf（emq,Hout)，从空缓冲队列队首取下一块空缓冲区，把它作为收容输出工作缓冲区Hout，然后把数据输出其中</strong> ，装满后； <strong>调用PutBuf(Outq,Hout),将收容输出缓冲区Hout挂在Outq队列队尾</strong></li>
+<li><strong>提取输出</strong> ： <strong>输出进程调用GetBuf（Outq,Sout）,从输出缓冲队列队首取下一块缓冲区，将它作为提取输出工作缓冲区Sout,输出进程从中提取数据</strong> ，提取完之后； <strong>调用PutBuf（emq，Sout），提取输出缓冲区Sout挂在emq队尾</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>设备分配<ul>
+<li>设备分配用数据结构<ul>
+<li>系统设备表：记录 <strong>系统全部设备</strong> 的情况 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-19712-323533.jpg" alt="图片"></li>
+<li>设备控制表：针对 <strong>每台设备</strong> 而设置和记录对应情况 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-496771-296747.jpg" alt="图片"></li>
+<li>设备控制器控制表：针对 <strong>每个设备控制器</strong> 而设置和记录对应情况 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-672720-87945.jpg" alt="图片"></li>
+<li>通道控制表：针对 <strong>每个通道</strong> 而设置和记录对应情况 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-580073-818678.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>设备分配考虑因素<ul>
+<li>设备的固有属性： <strong>独占&#x2F;共享&#x2F;虚拟设备（可共享）</strong></li>
+<li>设备分配算法： <strong>先来先服务&#x2F;优先级高者优先</strong></li>
+<li><strong>设备分配中的安全性</strong> ：安全分配&#x2F;不安全分配方式<ul>
+<li>安全分配方式：每当 <strong>进程发出I&#x2F;O请求</strong> 和 <strong>获得某种设备(资源)后</strong> ， <strong>便进入阻塞状态</strong> （破坏了死锁必要条件的： <strong>请求和保持</strong> )，直到其I&#x2F;O操作完成时才被唤醒， <strong>缺点是CPU和I&#x2F;O设备串行工作，进展缓慢</strong></li>
+<li>不安全分配方式： <strong>进程发出I&#x2F;O请求后仍继续运行</strong> ，需要时又可发出第二、第三个I&#x2F;O请求；仅当进程所请求的设备已被另一进程占用时，进程才进入阻塞状态， <strong>同一进程可同时操作多台设备，故推进迅速</strong> ； <strong>为避免死锁，需进行安全性计算</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>设备独立性（ <strong>设备无关性</strong> ）： <strong>应用程序独立于具体使用的物理设备</strong> ；应用程序 <strong>以逻辑设备名称</strong> 来请求使用某类设备；而系统实际执行时则 <strong>使用物理设备</strong> 名称<ul>
+<li>逻辑设备表（ <strong>LUT</strong> ）：实现 <strong>逻辑设备名到物理设备名的映射</strong><ul>
+<li>单用户系统：整个系统设置一张逻辑设备表 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-411142-68442.jpg" alt="图片"></li>
+<li>多用户系统：为每个用户设置一张逻辑设备表 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-906608-641712.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>设备独立性的目标<ul>
+<li>设备分配时的 <strong>灵活性、可拓展性&#x2F;适应性</strong></li>
+<li>易于实现 <strong>I&#x2F;O重定向（指用于I&#x2F;O操作的设备可以更换即重定向，而不必改变应用程序）</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>独占设备的分配程序：对于 <strong>具有I&#x2F;O通道的系统</strong> ，在进程提出I&#x2F;O请求后，系统的设备分配程序，可按 <strong>下述步骤进行设备分配：分配设备（物理设备名）、分配设备控制器、分配通道</strong> <ul>
+<li>设备分配程序的不足： <strong>进程以物理设备名提出I&#x2F;O请求；采用单通路I&#x2F;O系统结构，易产生瓶颈现象</strong></li>
+<li>设备分配程序的改进措施： <strong>进程应以逻辑设备名提出I&#x2F;O请求，从而增加设备的独立性; 考虑多通路I&#x2F;O系统结构</strong></li>
+</ul>
+</li>
+<li>假脱机技术（SPOOLing ）<ul>
+<li>脱机技术：批处理阶段引入了脱机技术（磁带）  </li>
+<li>假脱机技术（ <strong>SPOOLing</strong> ）： <strong>通过软件的方式将一台物理I&#x2F;O设备虚拟为多台逻辑I&#x2F;O设备，允许多个用户共享一台物理I&#x2F;O设备</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>设备处理<ul>
+<li>设备处理的层次结构及其各层功能划分<ul>
+<li>设备处理的层次结构 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-75732-853854.jpg" alt="图片"> <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-140972-131980.jpg" alt="图片"></li>
+<li>设备驱动程序 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-396669-430218.jpg" alt="图片"></li>
+<li>中断处理程序 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-355408-482405.jpg" alt="图片"></li>
+<li>各个层次实现的功能 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-392558-611467.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>设备处理程序的功能<ul>
+<li><strong>接收由I&#x2F;O请求进程</strong> 发来的 <strong>命令和参数</strong> ，并将命令中的抽象要求转化为具体要求</li>
+<li><strong>检查</strong> 用户I&#x2F;O请求的 <strong>合法性</strong></li>
+<li>检查I&#x2F;O设备状态， <strong>若忙则挂在设备队列上等待</strong></li>
+<li><strong>传递和设置I&#x2F;O设备的有关参数与工作方式</strong> ，包括根据用户I&#x2F;O请求 <strong>构造必要的通道程序</strong></li>
+<li><strong>发出I&#x2F;O命令</strong> ，启动分配到的I&#x2F;O设备去完成指定的I&#x2F;O操作</li>
+<li>及时 <strong>响应来自通道或设备控制器的中断请求</strong> ，并根据其中断类型调用相应中断处理程序进行处理</li>
+</ul>
+</li>
+<li>设备处理程序的特点<ul>
+<li>用于 <strong>I&#x2F;O请求进程与设备控制器</strong> 间通信</li>
+<li>与 <strong>I&#x2F;O设备特性</strong> 紧密相关：不同类型设备应配置不同驱动程序</li>
+<li>与I&#x2F;O控制方式紧密相关：中断&#x2F;DMA&#x2F;通道IO控制方式</li>
+<li>与硬件紧密相关，故部分程序代码必须用汇编语言书写，且基本部分可固化和存放于ROM</li>
+</ul>
+</li>
+<li>设备驱动过程<ul>
+<li><strong>化抽象I&#x2F;O操作</strong> 请求为 <strong>具体要求</strong></li>
+<li><strong>检查</strong> 用户I&#x2F;O请求的 <strong>合法性</strong></li>
+<li><strong>检查I&#x2F;O设备状态</strong> ，判断是否可用</li>
+<li><strong>传递和设置I&#x2F;O设备的有关参数与工作方式</strong> ，包括根据用户I&#x2F;O请求构造必要的通道程序</li>
+<li><strong>发出I&#x2F;O命令</strong> ，启动分配到的I&#x2F;O设备</li>
+</ul>
+</li>
+<li>中断处理过程<ul>
+<li>中断与陷入<ul>
+<li>中断： <strong>指CPU对I&#x2F;O设备发来的中断信号</strong> 的一种 <strong>响应</strong> 。由于中断是 <strong>由外部设备引起</strong> 的，故又称 <strong>外中断</strong> 。</li>
+<li>陷入： <strong>由CPU内部事件</strong> 所引起的中断。例如 <strong>进程在运算中发生了溢出，又如程序出错，如非法指令、地址越界</strong> 等。通常把这类中断称为 <strong>内中断或陷入</strong> 。与中断一样，若系统发现了有陷入事件，CPU也将暂停正在执行的程序，转去执行该陷入事件的处理程序。</li>
+</ul>
+</li>
+<li>中断向量表和中断优先级<ul>
+<li>中断向量表：为方便处理， <strong>通常为每种设备配以相应的中断处理程序</strong> ，并把其 <strong>入口地址放在中断向量表</strong> 中；同时为 <strong>每一设备的中断请求规定一个中断号</strong> ，对应于中断向量表中的一项。当I&#x2F;O设备发来中断请求时， <strong>由中断控制器确定其中断号，并据此中断号查找中断向量表，从中取出中断处理程序的入口地址</strong> ，这样便可以转入中断处理程序执行</li>
+<li>中断优先级：每个 <strong>中断源对服务要求的紧急程度并不相同</strong> ，需要为它们规定不同的优先级。例如， <strong>磁盘中断、打印机中断、键盘中断的优先级依次降低</strong></li>
+</ul>
+</li>
+<li>对多中断源的处理方式<ul>
+<li>屏蔽中断：处理机 <strong>正在处理一个中断时</strong> ，将 <strong>屏蔽掉所有的中断</strong> ，直到处理机已完成本次中断的处理后再去检查是否有中断发生</li>
+<li>嵌套中断： <strong>在设置了中断优先级的系统中</strong> ， <strong>同时有多个不同优先级的中断请求时</strong> ， <strong>CPU优先响应最高优先级的中断请求；同时高优先级的中断请求可以抢占正在运行的低优先级中断的处理机。</strong> 该方式类似于 <strong>基于优先级的抢占式进程调度。</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>磁盘存储器管理<ul>
+<li>磁盘性能简述<ul>
+<li>磁盘存储器<ul>
+<li><strong>容量大、存取速度快</strong> ，且 <strong>可实现随机存取</strong></li>
+<li><strong>实现虚拟存储器</strong>   <strong>&#x2F;虚拟设备</strong> 的必需硬件</li>
+<li>存放（程序和数据）文件的主要外存设备</li>
+</ul>
+</li>
+<li>磁盘的结构<ul>
+<li>磁盘、磁道、扇区 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-710258-888597.jpg" alt="图片"></li>
+<li>盘面、柱面 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-551838-533700.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>磁盘的类型<ul>
+<li>硬盘和软盘、单片盘和多片盘（了解）</li>
+<li>固定头磁盘和活动头磁盘 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-420938-958980.jpg" alt="图片"><ul>
+<li>活动头磁盘访问时间构成 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-71827-170205.jpg" alt="图片"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>磁盘调度： <strong>使各进程对磁盘的平均访问时间（主要是寻道时间）最小</strong><ul>
+<li>先来先服务调度算法（ <strong>FCFS</strong> ） <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-606388-607479.jpg" alt="图片"><ul>
+<li>基本思想：根据进程 <strong>请求访问磁盘的先后次序调度</strong></li>
+<li>评价： <strong>公平、简单</strong> 且每个进程的请求都能依次得到处理，但 <strong>寻道时间可能较长</strong></li>
+</ul>
+</li>
+<li>最短寻道时间优先调度算法（ <strong>SSTF</strong> ） <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-40602-575106.jpg" alt="图片"><ul>
+<li>基本思想：选择所 <strong>访问磁道与磁头当前所在磁道距离最近的进程优先调度</strong></li>
+<li>评价： <strong>不能保证平均寻道时间最短具较好的寻道性能</strong> ， <strong>可能导致进程饥饿现象</strong></li>
+</ul>
+</li>
+<li>扫描算法（电梯调度算法）（ <strong>SCAN</strong> ） <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-255909-150494.jpg" alt="图片"><ul>
+<li>基本思想： <strong>优先考虑磁头当前移动的方向</strong></li>
+<li>评价 <strong>：既能获得较好的寻道性，又能防止进程饥饿，广泛用于大中小型机及网络中</strong></li>
+</ul>
+</li>
+<li>循环扫描算法（ <strong>CSCAN</strong> ） <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-480050-479738.jpg" alt="图片"><ul>
+<li>基本思想： <strong>规定磁头单向移动，（与电梯调度算法的区别是，返回时直接回到起始段而非逐步递减）避免某些进程磁盘请求的严重延迟</strong></li>
+<li>评价： <strong>避免某些进程磁盘请求的严重延迟</strong></li>
+</ul>
+</li>
+<li>N步扫描算法（ <strong>N-Step-SCAN</strong> ）与 <strong>FSCAN算法</strong> ：磁盘克服前述调度算法均具的 <strong>磁臂粘着现象</strong> 即 <strong>磁臂停留在某处不动的情况（特别是高密度磁盘）</strong><ul>
+<li><strong>N-Step-SCAN</strong> ： <strong>主要思想是在磁头移动时，每经过N个磁道后就改变方向。</strong></li>
+<li><strong>FSCAN算法</strong> ： <strong>定期切换到队列的另一端以服务那些在当前磁头位置的请求。这样可以确保在某个时间段内，队列两端的请求都能得到服务。</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>磁盘高速缓冲<ul>
+<li><strong>磁盘高速缓冲的概念</strong> ： <strong>并非通常意义下在内存和CPU之间增设的小容量高速存储器</strong> ，而是指利用 <strong>内存中的存储空间</strong> 来 <strong>暂存从磁盘中读出的一系列盘块</strong> 中的信息，因此， <strong>其为一组在逻辑上属于磁盘而物理上驻留在内存的盘块</strong></li>
+<li>磁盘高速缓冲在内存的形式： <strong>开辟单独的固定大小的空间；与虚拟存储器共享内存缓冲池</strong></li>
+</ul>
+</li>
+<li>提高磁盘I&#x2F;O速度的其他方法<ul>
+<li>提前读：用户（进程）对文件访问常采用 <strong>顺序访问方式（前提）</strong> ，即顺序地访问文件各盘块的数据， <strong>所以在读入当前块的同时，可将下一盘块数据提前读入缓冲区</strong></li>
+<li>延迟写：指缓冲区中的数据本应立即写回磁盘，但 <strong>考虑到它们不久之后可能还会再被本进程或其它进程访问，因而并不立即将其写入磁盘，而是将它挂在空闲缓冲区队列的末尾</strong></li>
+<li>虚拟盘（ <strong>RAM盘</strong> ）： <strong>指利用内存空间仿真磁盘，常用于存放临时文件</strong> ； <strong>与磁盘高速缓冲区别</strong> ：内容由用户&#x2F;OS控制</li>
+<li>数据分布优化： <strong>优化物理块的分布</strong> （尽可能把属于同一个（索引或链接）文件的数据盘块安排在同一条磁道或相邻的磁道上，使磁头移动距离最小位示图或以簇为单位进行分配）； <strong>优化索引结点的分布：</strong> （将磁盘上所有磁道分成若干组，在每各组中都含有索引结点、盘块和空闲盘块表，以保证索引结点盘块与存放文件的数据盘块间距离最小）</li>
+</ul>
+</li>
+<li>磁盘I&#x2F;O全过程剖析（读操作为例）<ul>
+<li>全过程流程图 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-470921-827055.jpg" alt="图片"></li>
+<li>I&#x2F;O请求者进程（上） <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-801663-888571.jpg" alt="图片"></li>
+<li>磁盘设备驱动进程（上） <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-506228-708707.jpg" alt="图片"></li>
+<li>通道程序 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-282243-244438.jpg" alt="图片"></li>
+<li>中断处理 <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-703774-268446.jpg" alt="图片"></li>
+<li>磁盘设备驱动进程（下【对应9】） <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-39597-559179.jpg" alt="图片"></li>
+<li>I&#x2F;O请求者进程（下【对应5&#x2F;11】） <img src="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-93299-928533.jpg" alt="图片"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 2542608082@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2023 TanJ
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

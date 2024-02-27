@@ -6,26 +6,69 @@
   <meta name="keywords" content="">
   <meta name="description" content="TanJ_Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="第一章-操作系统引论 操作系统的目标 方便性 有效性 可扩充性 开放性   操作系统的作用 OS作为用户与计算机硬件系统之间的接口  命令方式 系统调用方式 图标-窗口方式   OS作为计算机系统资源的管理者 计算机资源可以分为：处理机 存储器 IO设备 文件（数据和程序）   OS实现了对计算机资源的抽象  完全无软件的计算机系统(即裸机)难于使用 I&#x2F;O设备管理软件实现对I&amp;#x2F">
+<meta name="description" content="第四章-内存管理 内存管理概述 存储器的层次结构  程序的装入与链接  程度的链接  静态链接方式：在 程序运行之前 ， 将各目标模块及它们所需的库函数链接成一个完整的装配模块，以后不再拆开 ，需进行（1） 相对地址修改 （2） 变换外部调用模块 ，如上图中 jmp(L)、jmp(L+M)等 装入时动态链接：在 装入内存时 ，采用 边装入边链接的链接方式 ，即在装入一个目标模块时， 若发生一个外部">
 <meta property="og:type" content="article">
-<meta property="og:title" content="OS_第一章绪论">
-<meta property="og:url" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/index.html">
+<meta property="og:title" content="TanJ_Blog">
+<meta property="og:url" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/index.html">
 <meta property="og:site_name" content="TanJ_Blog">
-<meta property="og:description" content="第一章-操作系统引论 操作系统的目标 方便性 有效性 可扩充性 开放性   操作系统的作用 OS作为用户与计算机硬件系统之间的接口  命令方式 系统调用方式 图标-窗口方式   OS作为计算机系统资源的管理者 计算机资源可以分为：处理机 存储器 IO设备 文件（数据和程序）   OS实现了对计算机资源的抽象  完全无软件的计算机系统(即裸机)难于使用 I&#x2F;O设备管理软件实现对I&amp;#x2F">
+<meta property="og:description" content="第四章-内存管理 内存管理概述 存储器的层次结构  程序的装入与链接  程度的链接  静态链接方式：在 程序运行之前 ， 将各目标模块及它们所需的库函数链接成一个完整的装配模块，以后不再拆开 ，需进行（1） 相对地址修改 （2） 变换外部调用模块 ，如上图中 jmp(L)、jmp(L+M)等 装入时动态链接：在 装入内存时 ，采用 边装入边链接的链接方式 ，即在装入一个目标模块时， 若发生一个外部">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-788884-561960.jpg">
-<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-840965-484545.jpg">
-<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-257340-111976.jpg">
-<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-89885-476839.jpg">
-<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-339965-400481.jpg">
-<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-918807-104678.jpg">
-<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-46882-131619.jpg">
-<meta property="article:published_time" content="2024-02-27T13:18:31.000Z">
-<meta property="article:modified_time" content="2024-02-27T13:44:25.685Z">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-938734-705166.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-555740-312955.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-697877-998860.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-131273-651599.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-216080-913828.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-442193-400363.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-757693-793379.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-650152-402651.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-878005-685023.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-55909-558347.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-297654-675173.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-368198-414060.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-434972-501493.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-544085-316727.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-737591-299785.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-967302-255534.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-752008-294277.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-511291-829933.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-627982-221221.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-809709-708780.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-658362-480856.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-95026-917233.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-491499-254970.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-132784-677845.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-750216-12435.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-678-910519.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-826367-196859.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-712595-679658.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-192922-398345.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-679994-450605.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-244609-873756.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-558182-348687.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-243011-788833.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-36855-195275.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-676845-284340.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-234374-115418.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-249350-690943.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-399235-258608.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-758509-415285.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-408801-908533.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-435545-362072.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-542015-298908.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-67428-310827.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-28558-147362.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-820765-749558.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-718265-834081.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-119338-650790.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-262759-908379.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-841755-159374.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-775815-444089.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-354618-801117.jpg">
+<meta property="article:published_time" content="2024-02-27T14:01:09.853Z">
+<meta property="article:modified_time" content="2024-02-27T04:07:52.000Z">
 <meta property="article:author" content="Tan J">
-<meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-788884-561960.jpg">
+<meta name="twitter:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-938734-705166.jpg">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -136,7 +179,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(2)</small>
+                <small>(10)</small>
             
         </div>
     </li>
@@ -148,7 +191,7 @@
         <div data-rel="OS">
             
             OS
-            <small>(1)</small>
+            <small>(4)</small>
         </div>
         
     </li>
@@ -173,7 +216,7 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="2">
+<input type="hidden" id="yelog_site_posts_number" value="10">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -229,6 +272,78 @@
 
     
     <nav id="title-list-nav">
+        
+        
+        <a  class="All "
+           href="/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2024-02-27 22:01:09">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2024-02-27 22:00:45">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="OS_第五章设备管理">OS_第五章设备管理</span>
+            <span class="post-date" title="2024-02-27 21:59:32">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All OS "
+           href="/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS_第四章内存管理">OS_第四章内存管理</span>
+            <span class="post-date" title="2024-02-27 21:58:12">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%89%E7%AB%A0%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81/%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2024-02-27 21:57:00">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All OS "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%89%E7%AB%A0%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS_第三章处理机调度与死锁">OS_第三章处理机调度与死锁</span>
+            <span class="post-date" title="2024-02-27 21:54:59">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2024-02-27 21:54:02">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All OS "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS_第二章进程管理">OS_第二章进程管理</span>
+            <span class="post-date" title="2024-02-27 21:52:08">2024/02/27</span>
+        </a>
         
         
         <a  class="All OS "
