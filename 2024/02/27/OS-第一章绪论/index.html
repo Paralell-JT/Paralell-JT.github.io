@@ -6,17 +6,26 @@
   <meta name="keywords" content=" OS ">
   <meta name="description" content="OS_第一章绪论 | TanJ_Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="第一章-操作系统引论 操作系统的目标 方便性 有效性 可扩充性 开放性   操作系统的作用 OS作为用户与计算机硬件系统之间的接口  命令方式 系统调用方式 图标-窗口方式   OS作为计算机系统资源的管理者 计算机资源可以分为：处理机 存储器 IO设备 文件（数据和程序）   OS实现了对计算机资源的抽象  完全无软件的计算机系统(即裸机)难于使用 I&#x2F;O设备管理软件实现对I&amp;#x2F">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2024/02/23/hello-world/index.html">
+<meta property="og:title" content="OS_第一章绪论">
+<meta property="og:url" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/index.html">
 <meta property="og:site_name" content="TanJ_Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="第一章-操作系统引论 操作系统的目标 方便性 有效性 可扩充性 开放性   操作系统的作用 OS作为用户与计算机硬件系统之间的接口  命令方式 系统调用方式 图标-窗口方式   OS作为计算机系统资源的管理者 计算机资源可以分为：处理机 存储器 IO设备 文件（数据和程序）   OS实现了对计算机资源的抽象  完全无软件的计算机系统(即裸机)难于使用 I&#x2F;O设备管理软件实现对I&amp;#x2F">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-02-23T12:59:24.200Z">
-<meta property="article:modified_time" content="2024-02-23T12:59:24.200Z">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-788884-561960.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-840965-484545.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-257340-111976.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-89885-476839.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-339965-400481.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-918807-104678.jpg">
+<meta property="og:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-46882-131619.jpg">
+<meta property="article:published_time" content="2024-02-27T13:18:31.000Z">
+<meta property="article:modified_time" content="2024-02-27T13:44:25.685Z">
 <meta property="article:author" content="Tan J">
+<meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-788884-561960.jpg">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -284,7 +293,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-02-27 21:41:54'>2024-02-27 21:18</time>
+            Created At : <time class="date" title='Updated At: 2024-02-27 21:44:25'>2024-02-27 21:18</time>
         
     </div>
     <div class="article-meta">
@@ -344,7 +353,7 @@
 <li>文件（数据和程序）</li>
 </ul>
 </li>
-<li>OS实现了对计算机资源的抽象 <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BAOS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-840965-484545.jpg"><ul>
+<li>OS实现了对计算机资源的抽象 <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-840965-484545.jpg"><ul>
 <li>完全无软件的计算机系统(即裸机)难于使用</li>
 <li>I&#x2F;O设备管理软件实现对I&#x2F;O设备操作的细节，并向上 <strong>将I&#x2F;O设备抽象为一组数据结构</strong> 以及 <strong>一组I&#x2F;O操作命令，如read和write</strong></li>
 <li>用户利用这些数据结构及操作命令进行数据输入或输出，无需关心I&#x2F;O是如何具体实现的</li>
@@ -355,7 +364,7 @@
 <li>操作系统的发展过程<ul>
 <li>未配置OS的计算机系统<ul>
 <li>人工操作方式：特点用户独占全机，CPU等待人工操作，装（卸）卡带。 <strong>人机矛盾</strong> ：人工操作方式与资源利用率之间的矛盾</li>
-<li>@脱机IO方式 ： <strong>为了缓解人机矛盾，以及CPU与IO设备之间速度不匹配</strong> <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-257340-111976.jpg"><ul>
+<li>@脱机IO方式 ： <strong>为了缓解人机矛盾，以及CPU与IO设备之间速度不匹配</strong> <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-257340-111976.jpg"><ul>
 <li>程序和数据的IO都是在外围机（脱离主机）完成，故为 <strong>脱机模式</strong></li>
 <li>减少了CPU的空闲时间</li>
 <li>提高了IO速度，CPU由高速磁带存取数据</li>
@@ -363,7 +372,7 @@
 </li>
 </ul>
 </li>
-<li>单道批处理系统：在 <strong>脱机IO方式上</strong> 加入了 <strong>批处理系统</strong> ，但是内存中只保留一道作业，故为 <strong>单道批处理系统</strong> <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-89885-476839.jpg"><ul>
+<li>单道批处理系统：在 <strong>脱机IO方式上</strong> 加入了 <strong>批处理系统</strong> ，但是内存中只保留一道作业，故为 <strong>单道批处理系统</strong> <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-89885-476839.jpg"><ul>
 <li>单道批处理系统的 <strong>主要缺点</strong> ：系统资源得不到充分利用<ul>
 <li>内存中仅有一道程序</li>
 <li>CPU需要等待IO请求完成，CPU利用率显著降低</li>
@@ -372,7 +381,7 @@
 </li>
 </ul>
 </li>
-<li>多道批处理系统： <strong>进一步的提高了资源的利用率以及系统吞吐量</strong> ， <strong>内存中装有多道作业，多道程序交替运行</strong> <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-339965-400481.jpg"><ul>
+<li>多道批处理系统： <strong>进一步的提高了资源的利用率以及系统吞吐量</strong> ， <strong>内存中装有多道作业，多道程序交替运行</strong> <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-339965-400481.jpg"><ul>
 <li>多道批处理系统的系统特征<ul>
 <li>多道性：内存中多道作业，允许并发</li>
 <li>无序性：作业完成顺序与进入内存的顺序无关</li>
@@ -515,8 +524,8 @@
 </li>
 <li>操作系统的结构设计<ul>
 <li>无结构OS（整体系统结构）：早期OS的规模很小，只有几十KB</li>
-<li>模块化结构OS <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-918807-104678.jpg"></li>
-<li>分层式结构OS <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-46882-131619.jpg"><ul>
+<li>模块化结构OS <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-918807-104678.jpg"></li>
+<li>分层式结构OS <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-46882-131619.jpg"><ul>
 <li>分层式结构的基本概念<ul>
 <li>将模块-接口法中“决策顺序”的无序性变为有序性</li>
 <li>在目标系统An和裸机系统(又称宿主系统)A0之间铺设若干个层次的软件A1、A2、A3、…、An-1，使An通过An-1、An-2、…、A2、A1层，最终能在A0上运行。在操作系统中，常采用自底向上法来铺设这些中间层</li>
