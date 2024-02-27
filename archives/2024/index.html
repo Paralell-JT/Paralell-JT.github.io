@@ -6,65 +6,13 @@
   <meta name="keywords" content="">
   <meta name="description" content="TanJ_Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="第五章-设备管理 I&#x2F;O系统组成 I&#x2F;O系统结构 微机总线型I&#x2F;O系统结构  主机通道型I&#x2F;O系统结构    I&#x2F;O设备分类及接口 按 数据传输速率 分类 高速设备 中速设备 低速设备   按 信息交换单位 分类 块设备（传输速度高，可寻址、DMA方式 例如磁盘 ） 字符设备（传输速率低、不可寻址、中断方式 例如鼠标、键盘 ）   按 设备共享属性">
-<meta property="og:type" content="article">
+<meta property="og:type" content="website">
 <meta property="og:title" content="TanJ_Blog">
-<meta property="og:url" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E5%BC%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:url" content="http://example.com/index.html">
 <meta property="og:site_name" content="TanJ_Blog">
-<meta property="og:description" content="第五章-设备管理 I&#x2F;O系统组成 I&#x2F;O系统结构 微机总线型I&#x2F;O系统结构  主机通道型I&#x2F;O系统结构    I&#x2F;O设备分类及接口 按 数据传输速率 分类 高速设备 中速设备 低速设备   按 信息交换单位 分类 块设备（传输速度高，可寻址、DMA方式 例如磁盘 ） 字符设备（传输速率低、不可寻址、中断方式 例如鼠标、键盘 ）   按 设备共享属性">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-870774-105018.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-789475-888879.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-733384-431403.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-917330-464705.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-811727-624679.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-653036-573559.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-236719-958758.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-327966-31236.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-820840-128864.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-575301-11904.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-780519-95881.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-200031-442543.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-929496-307290.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-683338-395991.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-165576-382086.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-492580-870824.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-121374-450134.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-729215-215375.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-165156-723338.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-362770-765106.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-491944-787475.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-19712-323533.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-496771-296747.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-672720-87945.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-580073-818678.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-411142-68442.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-906608-641712.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-75732-853854.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-140972-131980.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-396669-430218.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-355408-482405.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-392558-611467.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-710258-888597.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-551838-533700.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-420938-958980.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-71827-170205.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-606388-607479.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-40602-575106.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-255909-150494.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-480050-479738.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-470921-827055.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-801663-888571.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-506228-708707.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-282243-244438.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-703774-268446.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-39597-559179.jpg">
-<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-93299-928533.jpg">
-<meta property="article:published_time" content="2024-02-27T13:00:15.706Z">
-<meta property="article:modified_time" content="2024-02-27T04:07:52.000Z">
 <meta property="article:author" content="Tan J">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-870774-105018.jpg">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -175,25 +123,10 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(8)</small>
+                <small>(1)</small>
             
         </div>
     </li>
-    
-        
-            
-                
-    <li>
-        <div data-rel="OS">
-            
-            OS
-            <small>(1)</small>
-        </div>
-        
-    </li>
-
-            
-        
     
 </ul>
 <div class="left-bottom">
@@ -212,7 +145,7 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="8">
+<input type="hidden" id="yelog_site_posts_number" value="1">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -258,79 +191,12 @@
     <input id="tag-search" />
     <div class="tag-wrapper">
         
-            <li class="article-tag-list-item">
-                <i class="iconfont icon-tag"></i><a>OS</a>
-            </li>
-        
     </div>
 
 </div>
 
     
     <nav id="title-list-nav">
-        
-        
-        <a  class="All "
-           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E5%BC%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title=""></span>
-            <span class="post-date" title="2024-02-27 21:00:15">2024/02/27</span>
-        </a>
-        
-        
-        <a  class="All "
-           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E5%BC%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title=""></span>
-            <span class="post-date" title="2024-02-27 21:00:15">2024/02/27</span>
-        </a>
-        
-        
-        <a  class="All "
-           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E5%BC%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title=""></span>
-            <span class="post-date" title="2024-02-27 21:00:15">2024/02/27</span>
-        </a>
-        
-        
-        <a  class="All "
-           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E5%BC%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title=""></span>
-            <span class="post-date" title="2024-02-27 21:00:15">2024/02/27</span>
-        </a>
-        
-        
-        <a  class="All "
-           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E5%BC%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title=""></span>
-            <span class="post-date" title="2024-02-27 21:00:15">2024/02/27</span>
-        </a>
-        
-        
-        <a  class="All "
-           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E5%BC%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title=""></span>
-            <span class="post-date" title="2024-02-27 21:00:15">2024/02/27</span>
-        </a>
-        
-        
-        <a  class="All OS "
-           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E5%BC%A0%E7%BB%AA%E8%AE%BA/"
-           data-tag="OS"
-           data-author="" >
-            <span class="post-title" title="OS_第一章绪论">OS_第一章绪论</span>
-            <span class="post-date" title="2024-02-27 20:55:58">2024/02/27</span>
-        </a>
         
         
         <a  class="All "
@@ -406,7 +272,7 @@
     </div>
 </div>
 <div class="full-toc">
-    <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+    <button class="full" data-title="切换全屏 快捷键 s"><span class="min mobile"></span></button>
 <a class="" id="rocket" ></a>
 
 </div>
