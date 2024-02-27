@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TanJ_Blog</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="TanJ_Blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="第五章-设备管理 I&#x2F;O系统组成 I&#x2F;O系统结构 微机总线型I&#x2F;O系统结构  主机通道型I&#x2F;O系统结构    I&#x2F;O设备分类及接口 按 数据传输速率 分类 高速设备 中速设备 低速设备   按 信息交换单位 分类 块设备（传输速度高，可寻址、DMA方式 例如磁盘 ） 字符设备（传输速率低、不可寻址、中断方式 例如鼠标、键盘 ）   按 设备共享属性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TanJ_Blog">
+<meta property="og:url" content="http://example.com/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E5%BC%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="TanJ_Blog">
+<meta property="og:description" content="第五章-设备管理 I&#x2F;O系统组成 I&#x2F;O系统结构 微机总线型I&#x2F;O系统结构  主机通道型I&#x2F;O系统结构    I&#x2F;O设备分类及接口 按 数据传输速率 分类 高速设备 中速设备 低速设备   按 信息交换单位 分类 块设备（传输速度高，可寻址、DMA方式 例如磁盘 ） 字符设备（传输速率低、不可寻址、中断方式 例如鼠标、键盘 ）   按 设备共享属性">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-870774-105018.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-789475-888879.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-733384-431403.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-917330-464705.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-811727-624679.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-653036-573559.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-236719-958758.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-327966-31236.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-820840-128864.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-575301-11904.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-780519-95881.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-200031-442543.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-929496-307290.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-683338-395991.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-165576-382086.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-492580-870824.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-121374-450134.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-729215-215375.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-165156-723338.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-362770-765106.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-491944-787475.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-19712-323533.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-496771-296747.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-672720-87945.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-580073-818678.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-411142-68442.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-906608-641712.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-75732-853854.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-140972-131980.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-396669-430218.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-355408-482405.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-392558-611467.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-710258-888597.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-551838-533700.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-420938-958980.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-71827-170205.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-606388-607479.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-40602-575106.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-255909-150494.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-480050-479738.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-470921-827055.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-801663-888571.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-506228-708707.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-282243-244438.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-703774-268446.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-39597-559179.jpg">
+<meta property="og:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-93299-928533.jpg">
+<meta property="article:published_time" content="2024-02-27T13:00:15.706Z">
+<meta property="article:modified_time" content="2024-02-27T04:07:52.000Z">
+<meta property="article:author" content="Tan J">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/.com//%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-870774-105018.jpg">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>Tan J</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="github"
+               href="https://github.com/Paralell-JT"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="email"
+               href="mailto:2542608082@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="qq"
+               href="http://wpa.qq.com/msgrd?v=3&uin=2542608082&site=qq&menu=yes"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-qq"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="neteasemusic"
+               href="https://music.163.com/#/user/home?id=419480693"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-neteasemusic"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(8)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="OS">
+            
+            OS
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  site_url"
+               
+               href="/about">About</a>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="8">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>OS</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E5%BC%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2024-02-27 21:00:15">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E5%BC%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2024-02-27 21:00:15">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E5%BC%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2024-02-27 21:00:15">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E5%BC%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2024-02-27 21:00:15">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E5%BC%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2024-02-27 21:00:15">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E5%BC%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2024-02-27 21:00:15">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All OS "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E5%BC%A0%E7%BB%AA%E8%AE%BA/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS_第一章绪论">OS_第一章绪论</span>
+            <span class="post-date" title="2024-02-27 20:55:58">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/23/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2024-02-23 20:59:24">2024/02/23</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-OS-第一张绪论/第六章-文件管理" class="article article-type-post" itemscope itemprop="blogPost">
+    
+    <div class="article-meta">
+        
+        
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2024-02-27 12:07:52'>2024-02-27 21:00</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86"><span class="toc-text">第六章-文件管理</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="第六章-文件管理"><a href="#第六章-文件管理" class="headerlink" title="第六章-文件管理"></a>第六章-文件管理</h1><ul>
+<li>文件和文件系统<ul>
+<li>文件、记录和数据项 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-142771-218747.jpg" alt="图片"></li>
+<li>文件类型<ul>
+<li>按 <strong>文件性质与用途</strong> 分类：系统文件、用户文件、库文件</li>
+<li>按 <strong>文件中的数据形式</strong> 分类：源文件、目标文件、可执行文件</li>
+<li>按 <strong>存取控制属性</strong> 分类：只执行文件、只读文件、读写文件</li>
+<li>按 <strong>文件的组织形式和处理方式</strong> 分类：普通文件、目录文件、特殊文件</li>
+</ul>
+</li>
+<li>文件系统模型 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-23880-471756.jpg" alt="图片"></li>
+<li>常用文件系统格式类型（补充）<ul>
+<li>FAT12</li>
+<li>FAT16</li>
+<li>FAT32</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>文件的逻辑结构<ul>
+<li>文件的逻辑结构和物理结构的区别<ul>
+<li>逻辑结构： <strong>从用户观点出发所观察到的文件组织形式</strong> ，即 <strong>文件由一系列的逻辑记录组成，是用户可以直接处理的数据及其结构</strong> ， <strong>独立于文件的物理特性，又称为文件组织</strong></li>
+<li>物理结构：指的是 <strong>系统将文件存储在外存上所形成的一种存储组织形式</strong></li>
+</ul>
+</li>
+<li>文件逻辑结构的类型<ul>
+<li>按照文件是否有结构分类<ul>
+<li>有结构文件（ <strong>记录式文件</strong> ）：用 <strong>每个记录来描述实体集中的一个实体</strong> ，根据记录的长度又可以分为 <strong>定长记录和变长记录</strong> 两种。 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-684717-974480.jpg" alt="图片"><ul>
+<li>按文件的组织方式分类：根据 <strong>有结构文件</strong> 中的 <strong>各条记录</strong> 在 <strong>逻辑上如何组织</strong> 进一步分类<ul>
+<li>顺序文件：文件中的记录 <strong>逻辑上顺序排列</strong> （表格）,根据记录之间的顺序 <strong>是否按照关键字顺序排列</strong> 又可以分为： <strong>串结构、顺序结构</strong> <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-981847-376477.jpg" alt="图片"></li>
+<li>索引文件： <strong>针对可变长记录</strong> ，建立一张 <strong>索引表（索引表本身是定长记录的顺序文件）</strong> ，为每个记录设置一个表项，加快对记录的检索速度，以关键字作为key <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-418873-778312.jpg" alt="图片"></li>
+<li>索引顺序文件： <strong>索引文件+顺序文件，为一组记录</strong> 设置一个索引表项， <strong>减少索引表的大小，每个索引表项指向一个顺序文件</strong> <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-631536-357341.jpg" alt="图片"></li>
+<li><strong>检索效率分析</strong><ul>
+<li>分析 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-573838-831868.jpg" alt="图片"></li>
+<li><strong>多级索引</strong> 举例说明 <strong>（进一步加快检索速度）</strong> <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-133608-591896.jpg" alt="图片"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>无结构文件：.txt文件、源程序、可执行文件、库函数等等，即 <strong>流式文件</strong> ， <strong>文件的长度以字节为单位。</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>外存分配方式<ul>
+<li>文件的物理结构与外存分配： <strong>文件的物理结构</strong> 即 <strong>文件在外存上的存储组织形式</strong></li>
+<li>连续分配（ <strong>顺序文件</strong> ）：（ <strong>Tips</strong> :类似与内存分页，磁盘中的存储单元也会被分为磁盘块，对应的文件也会分成文件快， <strong>一般地，磁盘块&#x3D;文件块&#x3D;内存块&#x3D;页面</strong> ）<ul>
+<li>连续分配示意图 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-414681-212421.jpg" alt="图片"></li>
+<li>连续分配评测 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-50168-97676.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>链接分配（ <strong>链接式文件结构</strong> ）： <strong>支持离散分配</strong> ，通过盘块上的指针实现 <strong>同一文件多个离散盘块的链接</strong><ul>
+<li>隐式链接： <strong>通过每个文件块内指针指向下一个盘块实现链接</strong><ul>
+<li>隐式链接示意图 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-479402-413247.jpg" alt="图片"></li>
+<li>评价 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-790565-946982.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>显式链接： <strong>把用于链接文件的各个物理块的指针显式地存放在一张表中，即文件分配表（FAT：File Allocation Table）</strong><ul>
+<li>FAT介绍： <strong>一张磁盘只会建立一张FAT，开机时便将其放入内存，并常驻内存</strong><ul>
+<li>FAT空间开销计算 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-425522-629040.jpg" alt="图片"></li>
+<li>簇的概念： <strong>簇是一组连续的扇区</strong> ， <strong>一个簇通常有2n个盘块</strong> ，一般一个簇有（ <strong>1,2,4,8</strong> 个扇区），显然有若一个簇包含8个扇区，则磁盘的寻址范围最大容量可以扩大8倍, <strong>以簇为基本分配单位的好处是能适应磁盘容量不断增大的情况，还可以减少FAT表项个数，使得FAT占用更少的内存，</strong> 但是 <strong>簇的引用也造成了更大的簇内零头</strong></li>
+</ul>
+</li>
+<li>评价： <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-450356-268557.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>链接分配总结 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-313364-960196.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>索引分配（ <strong>索引式文件结构</strong> ）<ul>
+<li>索引分配的基本思想： <strong>文件打开仅须把该文件所占用盘块编号调入内存</strong> 即可， <strong>故可将每个文件所对应的盘块号集中地存放一个所谓的索引块中</strong> ，形成一个 <strong>索引表</strong></li>
+<li>索引分配的实现过程 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-44371-361281.jpg" alt="图片"></li>
+<li>索引分配的拓展：( <strong>文件太大解决方案</strong> )<ul>
+<li>链接方案：若 <strong>索引表太大</strong> ，一 <strong>个索引块装不下，可以将多个索引块链接起来存放，显然这种方案是低效的</strong> <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-308318-337920.jpg" alt="图片"></li>
+<li>多层索引方案<ul>
+<li>两层&#x2F;多层索引方案（ <strong>适合中、大作业</strong> ） <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-733637-964879.jpg" alt="图片"></li>
+<li>混合索引（ <strong>UNIXOS</strong> ）方案（ <strong>兼顾小、中、大作业</strong> ） <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-825394-454815.jpg" alt="图片"><ul>
+<li><strong>直接寻址</strong> ：直接地址项存放对应文件数据的盘块的盘块号， <strong>盘块大小4KB、盘块号占4B，则支持长度在4KB×10 &#x3D;  40KB以内的文件</strong></li>
+<li><strong>一次间接寻址</strong> ： <strong>i.addr(10)指向对应文件的一级索引块</strong> ，一级索引块可含4KB&#x2F;4B &#x3D; 1K个盘块号，故支持长度在 <strong>(4KB×1K&#x3D;4MB)+40KB</strong> 以内的文件</li>
+<li><strong>多次间接寻址</strong> ： <strong>i.addr(11)、 i.addr(12)分别指向对应文件的两级索引块和三级索引块</strong> ，所以支持文件长度可达( <strong>4KB×1K×1K ×1K&#x3D;4TB)+(4KB×1K×1K&#x3D;4GB)+4MB+40KB</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>索引分配总结 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-379929-533204.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>顺序分配、链接分配、索引分配总结 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-888090-377813.jpg" alt="图片"></li>
+<li>直接文件和散列文件 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-583370-467491.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>文件存储空间管理<ul>
+<li>文件存储空间管理的一些概念<ul>
+<li>对非空闲磁盘块的管理（存放了文件数据的磁盘块）</li>
+<li>对空闲磁盘块的管理</li>
+<li>存储空间的划分与初始化 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-752964-254954.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>空闲表法（ <strong>连续分配方式</strong> ） <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-706221-146855.jpg" alt="图片"></li>
+<li>空闲链表法（ <strong>针对连续分配、离散分配</strong> ） <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-646984-275092.jpg" alt="图片"><ul>
+<li>空闲盘块链（ <strong>适用离散分配方式</strong> ）： <strong>以盘块为单位</strong> 组成一条空闲链</li>
+<li>空闲盘区链（ <strong>适用连续、离散分配方式</strong> ）： <strong>盘区为单位</strong> 组成一条空闲链</li>
+</ul>
+</li>
+<li>位示图法：用每个二进制bit位表示一个盘块是否空闲 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-114446-153641.jpg" alt="图片"><ul>
+<li><strong>盘块号（b）与（行号，列号）【i,j】</strong> 的相互转换公式 <strong>b &#x3D; ni +j</strong> (n表示字长)</li>
+</ul>
+</li>
+<li>成组链接法（ <strong>针对大型文件系统，UNIX采用了成组链接法管理空闲磁盘块</strong> ）<ul>
+<li>成组链接法工作原理 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-618240-171158.jpg" alt="图片"></li>
+<li>成组链接法的分配<ul>
+<li><strong>检查空闲盘块号栈是否上锁</strong> ，若未上锁，则从 <strong>栈顶</strong> 取出一空闲块：（1）若其不是栈底， <strong>即该组空闲盘块号不为1</strong> ，则将其盘块分给用户，然后将栈顶指针下移一格，对S.free作减1操作。（2） <strong>若是栈底，该块对应的盘块中记有下一组可用的盘块号</strong> ，因此， <strong>必须先将该盘块的内容读入超级块的空闲盘块号栈中，然后再将该盘块分配出去</strong> 。 <strong>若s_nfree为0，而且栈底登记的盘块号为0，则表示系统中无空闲盘块可分配。</strong></li>
+</ul>
+</li>
+<li>成组链接法的回收<ul>
+<li><strong>检查空闲盘块号栈，若未上锁</strong> ，若栈中空闲盘块号数N&lt;100，即 <strong>栈未满，则执行空闲盘块号数N的加1操作，并将回收盘块的盘块号记入空闲盘块号栈的栈顶</strong> ； 若 <strong>栈已满</strong> ，应 <strong>将空闲盘块号栈的当前内容包括盘块数及所有盘块号记入新回收的盘块中</strong> ，同时 <strong>将新回收盘块的盘块号作为S.free(0)即栈底，并置空闲盘块号栈的空闲盘块数N为1</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>目录管理<ul>
+<li>目录管理基本要求<ul>
+<li>实现 <strong>“按名存取”（文件名&#x3D;&gt;外存地址）</strong></li>
+<li><strong>提高目录检索速度及文件存取速度</strong></li>
+<li><strong>文件共享</strong></li>
+<li><strong>允许文件重名，以便于文件使用</strong></li>
+</ul>
+</li>
+<li>文件控制块（ <strong>File Control Block</strong> ） <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-418895-431561.jpg" alt="图片"><ul>
+<li><strong>一个文件对应一个PCB，一个PCB就是一个文件目录项</strong></li>
+<li><strong>FCB的有序集合称为文件目录</strong></li>
+<li><strong>FCB包括了文件的基本信息</strong> ，包括 <strong>文件名、物理地址、逻辑结构、物理结构，存取控制信息</strong> （读&#x2F;写&#x2F;读写）， <strong>使用信息</strong> （文件创立时间、修改时间），其中 <strong>最重要最基本的信息是文件名及其文件存放的物理地址，这实现了文件的按名存取，实现了文件名到物理地址的映射。</strong></li>
+</ul>
+</li>
+<li>目录结构<ul>
+<li>单级目录结构：早期OS不支持多级目录， <strong>整个系统中只建立一张目录表，每个文件占一个目录项</strong> <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-920192-212726.jpg" alt="图片"><ul>
+<li><strong>实现了“按名存取”</strong></li>
+<li><strong>查找速度慢，不允许重名，不便于文件共享</strong></li>
+</ul>
+</li>
+<li>两级目录结构：早期的多用户OS， <strong>采用两级目录结构</strong> ， <strong>分为主文件目录和用户文件目录</strong> <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-341546-163781.jpg" alt="图片"><ul>
+<li><strong>优化了目录检索的速度</strong> ，例子（MFD指的是 <strong>主文件目录</strong> ， UFD： <strong>用户文件目录</strong> ） <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-961197-481476.jpg" alt="图片"></li>
+<li><strong>两级目录结构允许不同用户的文件名重复，但两级目录结构依然缺乏灵活性，用户不能对文件再分类</strong></li>
+<li><strong>用户隔离不便于文件共享和用户间协作</strong></li>
+</ul>
+</li>
+<li>多级目录结构（ <strong>树形目录</strong> ） <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-631903-626454.jpg" alt="图片"><ul>
+<li>绝对&#x2F;相对路径（ <strong>相对路径的引入有效减少了IO次数</strong> ）：若使用绝对路径，OS根据绝对路径一层一层地找到下一级目录；但很多时候，用户会连续访问同一目录内多个文件，每次都从根目录开始查找显然是低效的，引入当前路径后，磁盘I&#x2F;O次数减少，提高了文件访问效率。</li>
+</ul>
+</li>
+<li>无环图目录结构（ <strong>在树形目录的基础上，增加一些指向同一节点的有向边，使整个目录成为一个有向无环图，更方便的实现多个用户间文件共享</strong> ） <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-470007-324706.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>索引结点（ <strong>FCB的优化</strong> ）<ul>
+<li>索引结点引入的必要性： <strong>当文件很多时，文件目录可能占用大量的盘块，而FCB中有冗长信息是在目录检索中是不需要的</strong> ， <strong>目录检索只用到了文件名，</strong> 所以在 <strong>UNIX系统</strong> 中， <strong>将文件名与文件描述信息分开</strong> ， <strong>将文件描述信息单独形成一个成为索引结点的数据结构，简称为i结点</strong> ，在 <strong>文件目录中每个目录项仅由文件名和指向该文件所对应的i结点指针组成</strong> ，其中 <strong>14个字节为文件名，2字节为指向i结点的指针。</strong> <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-202331-644104.jpg" alt="图片"></li>
+<li>FCB与索引结点的开销比较： <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-959296-217889.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>目录查询技术<ul>
+<li>实现文件按名存取的基本步骤<ul>
+<li>系统根据用户提供的文件名，对文件目录进行查询，找出该文件的文件控制块或索引结点</li>
+<li>按照对应文件控制块或索引结点中所记录的文件物理地址（盘块号），计算出文件在磁盘上的物理地址</li>
+<li>启动磁盘驱动程序，将所存取的文件读入内存进行具体读写操作</li>
+</ul>
+</li>
+<li>UNIX文件卷组织结构<ul>
+<li><strong>系统引导块0#</strong></li>
+<li><strong>超级块1 #</strong></li>
+<li><strong>磁盘索引结点块 2# ~ K#</strong></li>
+<li><strong>文件数据块 K+1# ~ N#</strong></li>
+</ul>
+</li>
+<li>以UNIX系统为例，目录查询举例说明 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-619026-890234.jpg" alt="图片"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>文件共享与保护<ul>
+<li>文件共享的概念：指系统应 <strong>允许多个用户（进程）共享同一份文件</strong> ，从而在系统中 <strong>只需保存该共享文件的一个副本即可</strong></li>
+<li>早期文件共享的方法<ul>
+<li>绕弯路法 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-245108-950629.jpg" alt="图片"></li>
+<li>连访法（ <strong>类似于链接法</strong> ） <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-243449-944052.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>基于索引结点的共享方式（ <strong>硬链接</strong> ）：基本原理： <strong>借助索引结点，结点中设置计数变量count</strong> ，用于 <strong>表示链接到本索引结点上的用户目录项数</strong> ，当count&#x3D;&#x3D;0时，由OS负责删除文件。 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-537969-593076.jpg" alt="图片"></li>
+<li>基于符号链的共享方式（ <strong>软链接</strong> ）：基本原理：在 <strong>Windows系统中的.Link类型文件</strong> 就是采用了 <strong>软连接</strong> 的形式实现的文件共享，里面存放的是 <strong>共享文件的绝对地址</strong> ，所以 <strong>访问该文件需要查询多级目录</strong> ，会有 <strong>多次磁盘I&#x2F;O</strong> ，因此 <strong>软连接的速度要比硬链接慢</strong> <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-428780-453298.jpg" alt="图片"></li>
+<li>文件系统安全保护影响因素及其对策<ul>
+<li>人为因素<ul>
+<li>存取控制机制<ul>
+<li>保护域<ul>
+<li>保护域的概念： <strong>保护域</strong> 指的是 <strong>进程对一组对象（软件、硬件）访问权的集合</strong> <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-327378-120683.jpg" alt="图片"></li>
+<li>进程和域间静态联系： <strong>一个进程只联系一个域</strong> ， <strong>在进程的整个生命周期中，其可用资源是固定的</strong> ，这种域成为 <strong>“静态域”</strong></li>
+<li>进程和域间动态联系： <strong>一个进程联系多个域</strong> ， <strong>进程的每个运行阶段链联系一个域</strong> ，这样可 <strong>根据运行的实际需要规定进程的每个阶段中所能访问的对象。</strong></li>
+</ul>
+</li>
+<li>访问矩阵： <strong>利用一个矩阵来描述系统的访问控制，其中行表示不同的域，列表示不同的对象</strong>  <strong>[R:读 ；W：写 ；E：执行]</strong> <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-133820-166543.jpg" alt="图片"><ul>
+<li><strong>基本的访问矩阵</strong> &#x2F; <strong>具有域切换权的访问矩阵</strong> ：如上图， <strong>表示（D1域可以切换到D2域），（D2域可以切换到D3域）</strong></li>
+</ul>
+</li>
+<li>访问矩阵的修改：指的是 <strong>不同域之间的修改</strong><ul>
+<li>拷贝权：用“ * ”表示，需要注意的是 <strong>拷贝是限制拷贝</strong> ，不能把*也拷贝过去， <strong>限制了访问权的进一步扩散</strong> <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-192708-259279.jpg" alt="图片"></li>
+<li>所有权： <strong>用“ O ”表示</strong> ， <strong>若拥有该对象的所有权，可以增删其他域的访问权</strong> <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-261038-299606.jpg" alt="图片"></li>
+<li>控制权（ <strong>与前两者不同，前两者均是在不同域之间的变化，即同一列，而控制权是在一个域中的变化，即同一行的变化</strong> ），RT： <strong>D2对D3域有控制权，所以可以增删D3域中各对象的访问权</strong> <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-766960-824379.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>访问矩阵的简化策略<ul>
+<li>必要性与可行性： <strong>必要性：系统中有众多的域，而且有很多的对象，时空开销难以接受</strong> ； <strong>可行性：访问矩阵中很多表项都是空的，所以该矩阵为稀疏矩阵，可以进行压缩</strong></li>
+<li>简化对策<ul>
+<li>访问控制表（ <strong>按列划分</strong> ）：为 <strong>每一列（即每个对象）</strong> 建立一张访问控制表ACL，在该表中，把该列所有的空项剔除。</li>
+<li><strong>访问权限表（按行划分）</strong> ：为 <strong>每一行（即每个域）</strong> 建立一张访问权限表。ＲＴ，在该例中， <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-143825-85792.jpg" alt="图片"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>系统因素<ul>
+<li>系统容错技术</li>
+</ul>
+</li>
+<li>自然因素<ul>
+<li>后备系统</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>磁盘容错技术<ul>
+<li>基本概念: <strong>设置冗余部件以提高系统可靠性</strong></li>
+<li>低级磁盘容错技术SFT-I <strong>：双份目录与双份文件分配表；热修复重定向、写后读校验</strong></li>
+<li>中级磁盘容错技术SFT-I： <strong>磁盘镜像与磁盘双工</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据一致性控制<ul>
+<li>数据一致性问题及技术： <strong>当一个数据被分别存储到多个文件中时，便会出现数据的一致性问题</strong> 技术： <strong>硬件支持-稳定存储器</strong> ：理论上不会出现故障和错误，实际上 <strong>高度可靠的存储器系统</strong> ； <strong>采用冗余技术</strong> ，即将一份信息同时驻留在多个独立的非易失性的存储器上</li>
+<li>事务概念及恢复算法<ul>
+<li>事务的定义： <strong>事务是用于访问和修改各种数据项的一个程序单位</strong> 。事务也可以被看做是 <strong>一系列相关读和写操作</strong> 。 <strong>事务可以在同一文件不同记录中，也可以在多个文件中</strong> 。事务具有 <strong>“原子性”特征（提交操作&#x2F;夭折操作）</strong></li>
+<li>事务记录表（ <strong>运行记录</strong> ）：每一项记录都描述了 <strong>事务运行中的重要事务操作</strong> ，表中包括（ <strong>事务名、数据项名、旧值、新值</strong> ）</li>
+<li>恢复算法<ul>
+<li>针对 <strong>已完成事务</strong> ： <strong>Ｒｅｄｏ操作</strong> ： <strong>将所有已被修改的数据设置为新值</strong></li>
+<li>针对 <strong>夭折事务</strong> （ <strong>没有全部完成的事务</strong> ）： <strong>Ｕｎｄｏ操作</strong> ： <strong>将所有已被修改的数据恢复为修改前的值</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>检查点及恢复算法改进：如上述所述， <strong>一旦系统发生故障，必须检查整个日志表，以确定哪些事务需要利用redo过程去设置新值，哪些事务需要利用undo将所有修改的数据恢复为修改前的值</strong> ，因此 <strong>引入检查点，使对事务记录表中事务记录的清理工作经常化。</strong><ul>
+<li>检查点的作用： <strong>首先</strong> 是将驻留在 <strong>易失性存储器</strong> 中的 <strong>当前事务记录表中的所有记录输出到稳定存储器</strong> 中； <strong>其次</strong> 是将驻留在 <strong>易失性存储器</strong> 中的 <strong>所有已修改数据</strong> 输出到 <strong>稳定存储器</strong> 中； <strong>然后</strong> 是将事务记录表中的 <strong>&lt;检查点&gt;</strong> 记录输出到 <strong>稳定存储器</strong> 中；最后是每当出现一个&lt;检查点&gt;记录时，系统便执行上述恢复操作。</li>
+<li>恢复算法改进： <strong>首先</strong> ，查找事务记录表，确定在 <strong>最近检查点以前</strong> 开始执行的 <strong>最后事务Ti</strong> ；然后 <strong>针对Ti以后开始执行的事务集</strong> T中的事务Tk区别不同情况 **分别执行恢复操作Redo(Tk) &#x2F;Undo(Tk)**；     <strong>最后</strong> ， <strong>发生故障或检查点时执行恢复算法</strong></li>
+</ul>
+</li>
+<li>并发控制技术<ul>
+<li>用于实现事务顺序性的技术：在 <strong>多用户系统和计算机网络环境</strong> 下，可能有 <strong>多个用户在同时执行事务</strong> ，由于 <strong>事务具有原子性</strong> ， <strong>只有在一个事务执行完后，才允许另一事务执行</strong> ，即 <strong>各事务对数据项的修改是互斥的</strong> ，这便是 <strong>所谓的顺序性</strong> ，而把 <strong>用于实现事务顺序性的技术称为并发控制。</strong></li>
+<li>利用互斥锁来实现顺序性： <strong>为每一个共享对象设置一个互斥锁：简单易行，效率不高。</strong></li>
+<li>利用互斥锁和共享锁来实现顺序性： <strong>共享锁</strong> 与 <strong>互斥锁</strong> 的区别， <strong>共享文件只允许一个事务去写但允许多个事务同时读</strong> ，类似于 <strong>读者——写者问题解决方案。</strong></li>
+</ul>
+</li>
+<li>重复数据的一致性问题<ul>
+<li>重复文件的一致性 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-199175-699730.jpg" alt="图片"></li>
+<li>盘块号一致性的检查：（一个盘块要么是空闲块，要么是文件盘，所以 <strong>两个盘块数计数相加应该是1）</strong> <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-28945-43939.jpg" alt="图片"><ul>
+<li>丢失举例 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-24932-74962.jpg" alt="图片"></li>
+<li>重复举例 <img src="/.com//%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-74699-384497.jpg" alt="图片"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 2542608082@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2023 TanJ
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

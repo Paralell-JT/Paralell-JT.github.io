@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>OS_第一章绪论 | TanJ_Blog</title>
-  <meta name="keywords" content=" OS ">
-  <meta name="description" content="OS_第一章绪论 | TanJ_Blog">
+  <title>TanJ_Blog</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="TanJ_Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="第五章-设备管理 I&#x2F;O系统组成 I&#x2F;O系统结构 微机总线型I&#x2F;O系统结构  主机通道型I&#x2F;O系统结构    I&#x2F;O设备分类及接口 按 数据传输速率 分类 高速设备 中速设备 低速设备   按 信息交换单位 分类 块设备（传输速度高，可寻址、DMA方式 例如磁盘 ） 字符设备（传输速率低、不可寻址、中断方式 例如鼠标、键盘 ）   按 设备共享属性">
 <meta property="og:type" content="article">
@@ -359,34 +359,17 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-OS-第一张绪论" class="article article-type-post" itemscope itemprop="blogPost">
-    
-        <h1 class="article-title">OS_第一章绪论</h1>
+        <article id="post-OS-第一张绪论/第三章-处理机调度与死锁" class="article article-type-post" itemscope itemprop="blogPost">
     
     <div class="article-meta">
         
         
         
-        <span class="book">
-            <i class="iconfont icon-category"></i>
-            
-            
-            <a  data-rel="OS">OS</a>
-            
-        </span>
-        
-        
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color3">OS</a>
-            
-        </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-02-27 21:00:33'>2024-02-27 20:55</time>
+            Created At : <time class="date" title='Updated At: 2024-02-27 12:07:52'>2024-02-27 21:00</time>
         
     </div>
     <div class="article-meta">
@@ -408,7 +391,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA"><span class="toc-text">第一章-操作系统引论</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81"><span class="toc-text">第三章-处理机调度与死锁</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -424,216 +407,157 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="第一章-操作系统引论"><a href="#第一章-操作系统引论" class="headerlink" title="第一章-操作系统引论"></a>第一章-操作系统引论</h1><ul>
-<li>操作系统的目标<ul>
-<li>方便性</li>
-<li>有效性</li>
-<li>可扩充性</li>
-<li>开放性</li>
+        <h1 id="第三章-处理机调度与死锁"><a href="#第三章-处理机调度与死锁" class="headerlink" title="第三章-处理机调度与死锁"></a>第三章-处理机调度与死锁</h1><ul>
+<li>处理机调度的层次<ul>
+<li><strong>高级调度（长程调度&#x2F;作业调度）</strong> ： <strong>调度对象</strong> 为作业； <strong>主要职责</strong> 是从后备队列中选择新的进程，将它们调度到内存中准备执行； <strong>调度时间尺度</strong> 较长，以分钟为单位，主要用于多道批处理系统中，在分时和实时系统中不设置高级调度</li>
+<li><strong>中级调度（中程调度&#x2F;内存调度）</strong> ： <strong>调度对象</strong> 为内存中的进程； <strong>主要职责</strong> 是管理内存中的进程，提高内存利用率和系统吞吐量，将不活跃的进程从内存中对换到磁盘上，以释放内存资源，实际上就是存储器管理中的 <strong>对换功能</strong> ； <strong>调度时间尺度</strong> 以秒级或分钟级</li>
+<li><strong>低级调度（短程调度&#x2F;进程调度）</strong> ： <strong>调度对象</strong> 为进程或内核级线程； <strong>主要职责</strong> 是决定在内存中就绪状态的进程中，哪一个进程将获得处理器的时间片以执行； <strong>调度时间尺度</strong> 为毫秒级</li>
 </ul>
 </li>
-<li>操作系统的作用<ul>
-<li>OS作为用户与计算机硬件系统之间的接口 <img src="/.com//%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-788884-561960.jpg" alt="图片"><ul>
-<li>命令方式</li>
-<li>系统调用方式</li>
-<li>图标-窗口方式</li>
+<li>调度队列模型<ul>
+<li>仅有进程调度的调度队列模型 <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-698973-13132.jpg" alt="图片"></li>
+<li>具有高级和低级调度的调度队列模型 <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-847790-830943.jpg" alt="图片"></li>
+<li>具有三级调度的调度队列模型 <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-99899-510956.jpg" alt="图片"></li>
 </ul>
 </li>
-<li>OS作为计算机系统资源的管理者<ul>
-<li>计算机资源可以分为：处理机</li>
-<li>存储器</li>
-<li>IO设备</li>
-<li>文件（数据和程序）</li>
+<li>调度算法若干准则<ul>
+<li>面向用户的准则<ul>
+<li><strong>周转时间</strong> （ <strong>作业提交到系统开始到作业完成为止的这段时间</strong> ）短（ <strong>平均周转&#x2F;带权周转时间</strong> ）<ul>
+<li><strong>平均周转时间</strong>  <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-19374-867253.jpg" alt="图片"></li>
+<li><strong>带权平均周转时间：平均周转时间 &#x3D; 周转时间 &#x2F; 处理机提供服务时间</strong>  <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-849363-750932.jpg" alt="图片"></li>
 </ul>
 </li>
-<li>OS实现了对计算机资源的抽象 <img src="/.com//%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-840965-484545.jpg" alt="图片"><ul>
-<li>完全无软件的计算机系统(即裸机)难于使用</li>
-<li>I&#x2F;O设备管理软件实现对I&#x2F;O设备操作的细节，并向上 <strong>将I&#x2F;O设备抽象为一组数据结构</strong> 以及 <strong>一组I&#x2F;O操作命令，如read和write</strong></li>
-<li>用户利用这些数据结构及操作命令进行数据输入或输出，无需关心I&#x2F;O是如何具体实现的</li>
+<li>响应时间快</li>
+<li>截止时间的保证</li>
+<li>优先权准则</li>
 </ul>
 </li>
-</ul>
-</li>
-<li>操作系统的发展过程<ul>
-<li>未配置OS的计算机系统<ul>
-<li>人工操作方式：特点用户独占全机，CPU等待人工操作，装（卸）卡带。 <strong>人机矛盾</strong> ：人工操作方式与资源利用率之间的矛盾</li>
-<li>@脱机IO方式 ： <strong>为了缓解人机矛盾，以及CPU与IO设备之间速度不匹配</strong> <img src="/.com//%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-257340-111976.jpg" alt="图片"><ul>
-<li>程序和数据的IO都是在外围机（脱离主机）完成，故为 <strong>脱机模式</strong></li>
-<li>减少了CPU的空闲时间</li>
-<li>提高了IO速度，CPU由高速磁带存取数据</li>
+<li>面向系统 的准则<ul>
+<li>系统吞吐量高</li>
+<li>处理机利用率高</li>
+<li>各类资源的平衡利用</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>单道批处理系统：在 <strong>脱机IO方式上</strong> 加入了 <strong>批处理系统</strong> ，但是内存中只保留一道作业，故为 <strong>单道批处理系统</strong> <img src="/.com//%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-89885-476839.jpg" alt="图片"><ul>
-<li>单道批处理系统的 <strong>主要缺点</strong> ：系统资源得不到充分利用<ul>
-<li>内存中仅有一道程序</li>
-<li>CPU需要等待IO请求完成，CPU利用率显著降低</li>
-<li>IO设备的低速性降低CPU利用率</li>
+<li>各种调度算法<ul>
+<li>作业调度<ul>
+<li>先来先服务调度算法（First Come First Serve <strong>FCFS</strong> ）( <strong>作业&#x2F;进程调度</strong> ) <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-169900-439074.jpg" alt="图片"></li>
+<li>短作业优先调度算法（Short Job First <strong>SJF</strong> ）( <strong>作业&#x2F;进程调度</strong> ) <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-67710-439272.jpg" alt="图片"></li>
+<li>高优先权优先调度算法（Priority Schedule Algorithm <strong>PSA</strong> ）( <strong>作业&#x2F;进程调度</strong> )： <strong>基于作业的紧迫程度，由外部赋予作业相应的优先级，调度算法根据该优先级进行调度</strong> 。类型可分为： <strong>非抢占式优先级调度算法&#x2F;抢占式优先级调度算法； 静态优先级调度&#x2F;动态优先级调度</strong> </li>
+<li>高相应比优先调度算法（Highest Response Ratio Next <strong>HRRN</strong> ） <strong>FCFS和SJF的折中</strong> <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-923573-153819.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>进程调度<ul>
+<li>时间片轮转调度算法： <strong>按照FCFS的策略排队，用完时间片的进程送到就绪队列的末尾</strong> <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-558342-759919.jpg" alt="图片"></li>
+<li>多级队列调度算法：设置 <strong>多个就绪队列</strong> ， <strong>不同的就绪队列采用不同的调度算法</strong> ， <strong>一个就绪队列中的进程可以设置不同的优先级，不同的就绪队列本身也可以设置不同的优先级</strong></li>
+<li>多级反馈队列调度算法：前面各种进程调度算法都有一定的局限性，如果未指明进程长度，则短进程优先和基于进程长度的抢占式调度算法都无法使用； <strong>多级反馈队列调度算法是目前公认的一种较好的进程，较好地满足各种类型用户的需要，调度算法不必事先知道各进程所需的执行时间，较好地满足各种类型进程的需要</strong> <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-418320-457675.jpg" alt="图片"><ul>
+<li>调度机制：设置多个就绪队列并赋予不同优先级</li>
+<li>优先级低的队列的时间片大</li>
+<li>非最后队列采用FCFS算法，最后队列采用RR算法</li>
+<li>队列间采用优先级调度算法</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>多道批处理系统： <strong>进一步的提高了资源的利用率以及系统吞吐量</strong> ， <strong>内存中装有多道作业，多道程序交替运行</strong> <img src="/.com//%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-339965-400481.jpg" alt="图片"><ul>
-<li>多道批处理系统的系统特征<ul>
-<li>多道性：内存中多道作业，允许并发</li>
-<li>无序性：作业完成顺序与进入内存的顺序无关</li>
-<li><strong>调度性</strong><ul>
-<li>作业调度</li>
-<li>进程调度</li>
+<li>实时调度算法<ul>
+<li>实现实时调度的基本条件<ul>
+<li>提供必要的信息：就绪时间 ; 开始&#x2F;完成截止时间 ； 处理时间 ； 资源要求 ； 优先级</li>
+<li>系统处理能力强</li>
+<li>采用抢占式调度机制</li>
+<li>具有快速切换机制：快速响应中断，快速任务分派</li>
+</ul>
+</li>
+<li>实时调度算法的分类<ul>
+<li>根据实时任务性质的不同：<ul>
+<li>硬实时调度算法： <strong>硬实时系统中</strong> ，每个任务都有 <strong>严格的截止时间</strong> ，任务必须在其截止时间之前完成，否则可能导致系统失效或不可接受的结果；硬实时调度算法包括 <strong>最早截止时间优先（Earliest Deadline First，EDF）和最小松弛度优先（Least Slack Time First，LSTF）</strong> 等</li>
+<li>软实时调度算法： 在 <strong>软实时系统中</strong> ，任务也有截止时间，但 <strong>违反截止时间不会导致系统的严重失败或崩溃</strong> 。任务的截止时间违约可能会降低系统性能，但通常不会引发灾难性的后果；常见的软实时调度算法包括 <strong>优先级调度和周期性调度</strong></li>
+</ul>
+</li>
+<li>根据调度方式的不同：<ul>
+<li>非抢占式调度算法：在非抢占式调度中，一旦任务开始执行，它将一直执行到完成或主动释放CPU，而不会被其他任务中途打断； <strong>执行顺序不可改变、简单、可预测性高，减少了上下文切换的开销。</strong></li>
+<li>抢占式调度算法：在抢占式调度中，正在执行的任务可以在中途被更高优先级的任务抢占，以便更高优先级的任务立即获得CPU执行时间； <strong>执行顺序可改变、更好的响应性、更高的灵活性，能够适应不同任务的优先级和变化</strong></li>
+</ul>
+</li>
+<li>根据调度面向实时任务组类型不同：<ul>
+<li>静态调度算法：在 <strong>静态调度</strong> 中，任务的分配和调度是在编译或设计阶段确定的，也就是说， <strong>任务的执行顺序和资源分配在程序编写之前就已经确定了</strong></li>
+<li>动态调度算法：在动态调度中， <strong>任务的分配和资源管理是在运行时根据系统状态和需求动态确定的</strong> 。 <strong>任务可以根据优先级、资源可用性等因素进行重新排序或重新分配。</strong></li>
+</ul>
+</li>
+<li>基本调度策略分类：<ul>
+<li>时间片轮转调度算法： <strong>时间片轮转调度算法</strong> 是一种 <strong>抢占式调度</strong> 算法。每个任务都被分配一个 <strong>固定的时间片</strong> （时间量），当任务运行完其时间片后，调度器会将CPU资源分配给下一个任务，这样任务会依次轮流执行。</li>
+<li>优先级调度算法： <strong>优先级调度算法</strong> 根据每个 <strong>任务的优先级</strong> 来决定哪个任务获得CPU时间。具有较高优先级的任务将优先于优先级较低的任务执行，分为静态&#x2F;动态优先级</li>
+</ul>
+</li>
+<li>多处理机环境：<ul>
+<li>集中式调度：在集中式调度中， <strong>有一个中心调度器或任务调度管理器，</strong> 负责协调和分配系统中的任务和资源。这个中心化的调度器决定哪个任务在什么时候执行，以及分配给每个任务的资源</li>
+<li>分布式调度：在分布式调度中， <strong>任务调度的决策分散在系统的多个节点上，每个节点都可以独立地决定任务的执行和资源分配。</strong> 这种方式可以提高系统的并行性和可伸缩性。</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>多道批处理系统的优点<ul>
-<li><strong>资源利用率高：多道程序交替运行</strong></li>
-<li><strong>系统吞吐量大：①CPU和其他资源保持忙碌状态 ②仅当作业完成时或运行不下去时才进行调度，系统开销小</strong></li>
+<li>常用的实时调度算法<ul>
+<li><strong>最早截止时间优先调度算法</strong> （Earliest Deadline First <strong>EDF</strong> ）<ul>
+<li><strong>非抢占式调度</strong> 用于 <strong>非周期实时任务</strong> <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-649212-487065.jpg" alt="图片"></li>
+<li><strong>抢占式调度</strong> 用于 <strong>周期实时任务</strong> <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-558858-59726.jpg" alt="图片"></li>
 </ul>
 </li>
-<li>多道批处理系统的缺点<ul>
-<li><strong>平均周转时间长：作业要排队依次处理，故周转时间较长</strong></li>
-<li><strong>无交互能力，一旦作业提交，用户无法与作业进行交互，修改与调试麻烦</strong></li>
-</ul>
-</li>
-<li>多道批处理系统需要解决的问题： <strong>为了解决如下问题，在计算机系统中增加一组软件，正是这样的一组软件构成了OS，据此，把OS定义为：操作系统是一组能有效地组织和管理计算机软硬件资源，合理地对各类作业进行调度，以及方便用户使用的程序的集合。</strong><ul>
-<li>处理机争用问题</li>
-<li>内存分配和保护问题</li>
-<li>IO设备分配问题</li>
-<li>文件的组织和管理问题</li>
-<li>作业管理问题</li>
-<li>用户与系统的接口问题</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>分时系统： <strong>为了满足人机交互的需求</strong> ：在一台主机上连接了多个配有显示器和键盘的终端并由此组成的系统，该系统允许多个用户同时通过自己的终端以交互方式使用计算机，共享主机中的资源。<ul>
-<li>分时系统实现中的关键问题<ul>
-<li>及时接收：连接多个终端，为每个终端配置缓冲区</li>
-<li>及时处理：各个用户的作业都必须驻留在内存中，并可以频繁获得处理机<ul>
-<li><strong>作业直接进入内存</strong></li>
-<li><strong>采用轮转运行方式，引入了时间片的概念</strong></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>分时系统的特征：<ul>
-<li><strong>多路性</strong> ：宏观上多个用户同时工作共享资源，微观上每个用户作业轮流运行一个时间片</li>
-<li><strong>独立性</strong> ：各用户在各自终端上独立操作，互不干扰</li>
-<li><strong>及时性</strong> ：响应时间短</li>
-<li><strong>交互性</strong> ：用户通过终端与系统交互</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>实时系统：指系统能 <strong>及时响应</strong> 外部事件的请求，在 <strong>规定时间内</strong> 完成对该事件的处理<ul>
-<li>实时系统的类型：<ul>
-<li>工业武器控制系统</li>
-<li>信息查询系统</li>
-<li>多媒体系统</li>
-<li>嵌入式系统</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>实时系统与分时系统特征的比较<ul>
-<li>多路性<ul>
-<li>信息查询系统和分时系统中，按分时原则为多个终端用户服务</li>
-<li>实时控制系统中，采集多路现场信息，控制多个对象或执行机构</li>
-</ul>
-</li>
-<li>独立性<ul>
-<li>信息查询系统中，每个终端用户在与系统交互时彼此相互独立</li>
-<li>实时控制系统中，对信息的采集和对对象的控制也彼此互不干扰</li>
-</ul>
-</li>
-<li>及时性<ul>
-<li>信息查询系统和多媒体系统：依据人所能接受的等待时间确定</li>
-<li>实时控制系统：以控制对象所要求的截止时间来确定</li>
-</ul>
-</li>
-<li>交互性<ul>
-<li>分时系统：能向终端用户提供数据处理、资源共享等服务</li>
-<li>实时系统：仅限于访问系统中专用服务或发送特定的命令</li>
-</ul>
-</li>
-<li>可靠性<ul>
-<li>分时系统要求系统可靠</li>
-<li>实时系统要求系统高度可靠</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>微机操作系统的发展<ul>
-<li>单用户单任务操作系统<ul>
-<li>最简单的微机操作系统，主要配置在8位和16位微机</li>
-<li>最有代表性的系统是：CP&#x2F;M（8位）和MS-DOS（16位）</li>
-</ul>
-</li>
-<li>单用户多任务操作系统：只允许一个用户上机，但允许用户把程序分为若干个任务，使它们并发执行，从而有效地改善了系统的性能。</li>
-<li>多用户多任务操作系统<ul>
-<li>UNIX</li>
-<li>Solaris</li>
-<li>LINUX</li>
+<li><strong>最低松弛度优先调度算法</strong> （Least Laxity First <strong>LLF</strong> ）： <strong>松弛度(紧急程度)计算公式：任务结束截止时间 - 当前时间 - 任务尚需时间</strong> <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-397237-129548.jpg" alt="图片"></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li>操作系统的功能与特征<ul>
-<li>操作系统的基本特性<ul>
-<li>并发<ul>
-<li><strong>并行性</strong> 指的是两个或多个事件在同一时刻发生（ <strong>微观概念</strong> ）</li>
-<li><strong>并发性</strong> 指的是两个或多个事件在同一时间间隔发生（ <strong>宏观概念</strong> ）</li>
-<li>引入进程：进程指的是在系统中能 <strong>独立运行并作为资源分配</strong> 的基本单位</li>
-</ul>
-</li>
-<li>共享<ul>
-<li>互斥共享方式</li>
-<li>同时访问方式</li>
-</ul>
-</li>
-<li>虚拟<ul>
-<li><strong>时分复用技术：利用处理机的空闲时间运行其他程序，提高处理机的利用率</strong><ul>
-<li>虚拟处理机技术</li>
-<li>虚拟设备技术</li>
-</ul>
-</li>
-<li><strong>空分复用技术：利用存储器的空闲空间分区域存放和运行多道程序，提高内存的利用率</strong></li>
-</ul>
-</li>
-<li><strong>异步：多道程序环境下，多个进程并发执行，进程的执行“走走停停的情况”</strong></li>
-</ul>
-</li>
-<li>操作系统的主要功能<ul>
-<li>处理机管理功能</li>
-<li>存储器管理功能</li>
-<li>设备管理功能</li>
-<li>文件管理功能</li>
-<li>与用户之间的接口</li>
+<li>死锁<ul>
+<li>死锁的基本概念<ul>
+<li>死锁的定义：在多道程序系统中，并发执行的多个进程因争夺资源而造成的一种若无外力作用有关进程都将永远不能向前推进的僵持状态。</li>
+<li>资源分类<ul>
+<li>可重用性资源（ <strong>永久性资源</strong> ）： <strong>每一个单元只能分配给一个进程使用，不允许多个进程共享</strong> ；进程在使用可重用性资源时， <strong>须按照如下顺序：请求、使用、释放</strong> ； <strong>资源的单元数目相对固定，进程在运行期间既不能创建也不能删除</strong> ； <strong>例子：CPU、I&#x2F;O通道、主存储器和辅助存储器、设备、以及文件、数据库和信号量之类的数据结构</strong></li>
+<li>可消耗性资源（ <strong>临时性资源</strong> ）： <strong>进程运行期间动态地创建和消耗</strong> ；每一类可消耗性资源的 <strong>单元数目在进程运行期间是可以变化</strong> 的； <strong>进程在运行过程</strong> 中， <strong>可以不断地创造</strong> 可消耗性资源的单元；进程在运行过程中， <strong>可以请求</strong> 若干个可消耗性资源单元 。 <strong>例：进程间通信的消息</strong></li>
+<li>可抢占性资源：指某进程在获得这类资源后，可以再被其它进程或系统抢占这类资源不会引起死锁， <strong>例如CPU和内存</strong></li>
+<li>不可抢占性资源：一旦系统把某资源分配给该进程后，就不能将它强行收回，只能在进程用完后自行释放 ， <strong>例如打印机、磁带机</strong></li>
 </ul>
 </li>
 </ul>
 </li>
-<li>操作系统的结构设计<ul>
-<li>无结构OS（整体系统结构）：早期OS的规模很小，只有几十KB</li>
-<li>模块化结构OS <img src="/.com//%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-918807-104678.jpg" alt="图片"></li>
-<li>分层式结构OS <img src="/.com//%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-46882-131619.jpg" alt="图片"><ul>
-<li>分层式结构的基本概念<ul>
-<li>将模块-接口法中“决策顺序”的无序性变为有序性</li>
-<li>在目标系统An和裸机系统(又称宿主系统)A0之间铺设若干个层次的软件A1、A2、A3、…、An-1，使An通过An-1、An-2、…、A2、A1层，最终能在A0上运行。在操作系统中，常采用自底向上法来铺设这些中间层</li>
-<li>优点：易保证系统的正确性；易扩充和易维护</li>
-<li>缺点：系统效率降低。由于层次结构是分层单向依赖的，必须在每层之间都建立层次间的通信机制，OS每执行一个功能，通常要自上而下地穿越多个层次，这无疑会增加系统的通信开销，从而导致系统效率的降低</li>
+<li>死锁产生的原因<ul>
+<li>竞争资源（ <strong>不可抢占性资源&#x2F;临时性资源</strong> ） <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-671559-196546.jpg" alt="图片"> <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-115534-151897.jpg" alt="图片"></li>
+<li>进程推进顺序不当： <strong>①、②、③曲线均不会死锁；④则发生死锁</strong> <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-938759-779306.jpg" alt="图片"></li>
+</ul>
+</li>
+<li>死锁产生的必要条件<ul>
+<li>互斥条件</li>
+<li>请求和保持条件</li>
+<li>不可抢占</li>
+<li>循环等待</li>
+</ul>
+</li>
+<li>处理死锁的基本方法<ul>
+<li>预防死锁： <strong>设置某些限制前提</strong> 以破坏产生死锁必要条件<ul>
+<li><strong>破坏请求和保持条件</strong> ， <strong>一次性申请所有资源</strong> ； <strong>优点</strong> ：简单、易行、安全； <strong>缺点</strong> ：资源被严重浪费，进程经常会发生饥饿现象</li>
+<li><strong>破坏不可抢占条件，主动释放</strong> ，进程在需要资源时才提出请求，且得不到满足时应释放其已占有资源； <strong>缺点：实现复杂，代价很大</strong> （反复地申请与释放资源、进程周转时间延长、系统吞吐量降低、系统开销增加）</li>
+<li><strong>破坏环路等待条件，申请有序</strong> ， <strong>所有资源按类型进行线性排队，所有进程对资源的请求严格按资源序号递增次序提出</strong> ； <strong>缺点</strong> ：资源次序的不灵活性（新设备、程序逻辑设计与编程限制及资源浪费）</li>
+</ul>
+</li>
+<li>避免死锁： <strong>资源动态分配过程中</strong> ，利用某种方法防止系统进入不安全状态<ul>
+<li><strong>银行家算法</strong><ul>
+<li>算法描述： <strong>只要保证系统处于安全状态，便可避免死锁，并非所有不安全状态都是死锁状态</strong> <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-769489-630403.jpg" alt="图片"> <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-126647-418901.jpg" alt="图片"><ul>
+<li>算法模拟 <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-156287-873164.jpg" alt="图片"></li>
 </ul>
 </li>
 </ul>
 </li>
-<li>微内核OS（待补充）<ul>
-<li>基本概念<ul>
-<li>足够小的内核</li>
-<li>基于客户&#x2F;服务器模式</li>
-<li>应用“机制与策略分离”原理</li>
-<li>采用面向对象技术</li>
+</ul>
+</li>
+<li>检测死锁： <strong>运行过程中</strong> 通过 <strong>系统设置的检测机构及时检测死锁的发生</strong> ，并精确确定相关进程和资源，类似于银行家算法 <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-714943-591937.jpg" alt="图片"> <img src="/.com//%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-772034-425885.jpg" alt="图片"></li>
+<li>解除死锁： <strong>撤销或挂起一些进程</strong> 以 <strong>回收资源和再分配</strong><ul>
+<li>基本方法：1、 <strong>抢占资源</strong> ，由一个&#x2F;多个进程抢占足够资源，分配给死锁进程，以解除死锁状态  ；2、 <strong>终止一个&#x2F;多个死锁进程</strong></li>
+<li>终止进程的方法：<ul>
+<li>终止所有死锁进程： <strong>最简单，代价可能很大</strong></li>
+<li>逐个终止死锁进程：终止进程的策略： <strong>为死锁解除付出的代价最小</strong></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
