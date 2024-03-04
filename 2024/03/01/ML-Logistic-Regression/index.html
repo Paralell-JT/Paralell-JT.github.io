@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>MachineLearning_Introduction | TanJ_Blog</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="MachineLearning_Introduction | TanJ_Blog">
+  <title>ML_Logistic_Regression | TanJ_Blog</title>
+  <meta name="keywords" content=" MachineLearning ">
+  <meta name="description" content="ML_Logistic_Regression | TanJ_Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="实验1 循环结构：求阶乘末尾零个数 算法思路：  末尾0的个数取决于阶乘中5的因子的个数，故Z（N）等于阶乘中5的个数，只需写个For循环即可 复杂度 O（n）  #include &lt;stdio.h&gt;  int Function(int N) &#123;     int count &#x3D; 0;     &#x2F;&#x2F; 由于末尾零的个数取决于阶乘中5的因子个数，因此只需计算阶乘">
 <meta property="og:type" content="article">
@@ -381,24 +381,39 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-MachineLearning-Introduction" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-ML-Logistic-Regression" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">MachineLearning_Introduction</h1>
+        <h1 class="article-title">ML_Logistic_Regression</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="MachineLearning">MachineLearning</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color1">MachineLearning</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-02-28 09:55:36'>2024-02-28 09:55</time>
+            Created At : <time class="date" title='Updated At: 2024-03-04 20:20:52'>2024-03-01 15:27</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:0</span>
+        <span>Count:405</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -428,7 +443,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#logistic-regression"><span class="toc-text">Logistic Regression</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="toc-text">什么是分类问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%87%E8%AE%BE%E5%87%BD%E6%95%B0%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-text">假设函数的选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0"><span class="toc-text">代价函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%B1%BB%E5%88%AB%E5%88%86%E7%B1%BB"><span class="toc-text">多类别分类</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -444,7 +459,42 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="logistic-regression">Logistic Regression</h1>
+<h2 id="什么是分类问题">什么是分类问题</h2>
+<ul>
+<li>预测的变量是离散的值，例如：正例1，反例0</li>
+<li>算法输出的边界在0~1之间</li>
+</ul>
+<h2 id="假设函数的选择">假设函数的选择</h2>
+<ul>
+<li>常用的Sigmoid Function函数： <span class="math inline">\(g\left( z \right)=\frac{ 1 }{ 1+{ { e }^{ -z } } }\)</span>​​。</li>
+</ul>
+<figure>
+<img src="/2024/03/01/ML-Logistic-Regression/TanJBlog\source_posts\ML-Logistic-Regression\image-20240301153534631.png" alt="image-20240301153534631"><figcaption>image-20240301153534631</figcaption>
+</figure>
+<ul>
+<li><p>判断边界，根据不同的模型拟合不同的边界</p>
+<ul>
+<li><p>边界为线性函数<img src="/2024/03/01/ML-Logistic-Regression/TanJBlog\source_posts\ML-Logistic-Regression\image-20240301154638203.png" alt="image-20240301154638203"></p></li>
+<li><p>边界为多项式函数</p>
+<figure>
+<img src="/2024/03/01/ML-Logistic-Regression/TanJBlog\source_posts\ML-Logistic-Regression\image-20240301154705931.png" alt="image-20240301154705931"><figcaption>image-20240301154705931</figcaption>
+</figure></li>
+</ul></li>
+<li><p>Sigmoid + 合适的边界函数 = 假设函数</p></li>
+</ul>
+<p>​ <img src="/2024/03/01/ML-Logistic-Regression/TanJBlog\source_posts\ML-Logistic-Regression\image-20240301154850436.png" alt="image-20240301154850436"></p>
+<h2 id="代价函数">代价函数</h2>
+<ul>
+<li><p><strong>逻辑回归的拟合问题</strong>：由于我们选择的假设函数是Sigmoid函数，将其带入到线性回归的代价函数中，我们发现：我们得到的<strong>代价函数是一个具有多个局部最小值的函数，即非凸函数</strong>，这将影响到梯度下降法寻找全局最小值。<img src="/2024/03/01/ML-Logistic-Regression/TanJBlog\source_posts\ML-Logistic-Regression\image-20240301155255355.png" alt="image-20240301155255355"></p></li>
+<li><p>代价函数的选择：<img src="/2024/03/01/ML-Logistic-Regression/TanJBlog\source_posts\ML-Logistic-Regression\image-20240301155414129.png" alt="image-20240301155414129"></p>
+<ul>
+<li>当实际值为1：若<span class="math inline">\(h_{\theta } (x)\)</span>的值也为1，那么误差为0；反之，若<span class="math inline">\(h_{\theta } (x)\)</span>距离1越远，误差越大</li>
+<li>当实际值为0：若<span class="math inline">\(h_{\theta } (x)\)</span>为0，那么误差也为0；反之，若<span class="math inline">\(h_{\theta } (x)\)</span>距离0越远，那么输出的误差也就越大。</li>
+</ul>
+<p>可以看到，经过一连串的求导之后，我们得到了与线性回归同样的结果，但这并不意味着两者之间存在必然的关系。此外，除了梯度下降之外，还有一些优化的算法，这些算法比梯度下降更为高效：<strong>共轭梯度</strong>（<strong>Conjugate Gradient</strong>），<strong>局部优化法</strong>(<strong>Broyden fletcher goldfarb shann,BFGS</strong>)和<strong>有限内存局部优化法</strong>(<strong>LBFGS</strong>) （浅浅的埋个坑）</p></li>
+</ul>
+<h2 id="多类别分类">多类别分类</h2>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 2542608082@qq.com </span>

@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TanJ_Blog</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="TanJ_Blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="实验1 循环结构：求阶乘末尾零个数 算法思路：  末尾0的个数取决于阶乘中5的因子的个数，故Z（N）等于阶乘中5的个数，只需写个For循环即可 复杂度 O（n）  #include &lt;stdio.h&gt;  int Function(int N) &#123;     int count &#x3D; 0;     &#x2F;&#x2F; 由于末尾零的个数取决于阶乘中5的因子个数，因此只需计算阶乘">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TanJ_Blog">
+<meta property="og:url" content="http://example.com/2024/03/02/%E8%B4%BE%E5%9D%9B/index.html">
+<meta property="og:site_name" content="TanJ_Blog">
+<meta property="og:description" content="实验1 循环结构：求阶乘末尾零个数 算法思路：  末尾0的个数取决于阶乘中5的因子的个数，故Z（N）等于阶乘中5的个数，只需写个For循环即可 复杂度 O（n）  #include &lt;stdio.h&gt;  int Function(int N) &#123;     int count &#x3D; 0;     &#x2F;&#x2F; 由于末尾零的个数取决于阶乘中5的因子个数，因此只需计算阶乘">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/03/02/%E8%B4%BE%E5%9D%9B/WeChat%20Files/wxid_05xybnqrf45n22/FileStorage/Temp/bbfe2c4b11c5c117b3707384634043d.png">
+<meta property="og:image" content="http://example.com/2024/03/02/%E8%B4%BE%E5%9D%9B/%E6%A1%8C%E9%9D%A2/%E8%B4%BE%E5%9D%9B/70d9f605df07447a51aa45847686ea6.png">
+<meta property="og:image" content="http://example.com/2024/03/02/%E8%B4%BE%E5%9D%9B/%E6%A1%8C%E9%9D%A2/%E8%B4%BE%E5%9D%9B/image-20240302170653961.png">
+<meta property="og:image" content="http://example.com/2024/03/02/%E8%B4%BE%E5%9D%9B/%E6%A1%8C%E9%9D%A2/%E8%B4%BE%E5%9D%9B/89e288156cec3dcba559b4a468e5295.png">
+<meta property="article:published_time" content="2024-03-02T06:00:54.416Z">
+<meta property="article:modified_time" content="2024-03-02T09:07:06.096Z">
+<meta property="article:author" content="Tan J">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/03/02/%E8%B4%BE%E5%9D%9B/WeChat%20Files/wxid_05xybnqrf45n22/FileStorage/Temp/bbfe2c4b11c5c117b3707384634043d.png">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>Tan J</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="github"
+               href="https://github.com/Paralell-JT"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="email"
+               href="mailto:2542608082@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="qq"
+               href="http://wpa.qq.com/msgrd?v=3&uin=2542608082&site=qq&menu=yes"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-qq"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="neteasemusic"
+               href="https://music.163.com/#/user/home?id=419480693"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-neteasemusic"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(11)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="OS">
+            
+            OS
+            <small>(6)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Network">
+            
+            Network
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="MachineLearning">
+            
+            MachineLearning
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  site_url"
+               
+               href="/about">About</a>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="11">
+<input type="hidden" id="yelog_site_word_count" value="30.2k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>MachineLearning</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Network</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>OS</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All "
+           href="/2024/03/02/%E8%B4%BE%E5%9D%9B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title=""></span>
+            <span class="post-date" title="2024-03-02 14:00:54">2024/03/02</span>
+        </a>
+        
+        
+        <a  class="All MachineLearning "
+           href="/2024/03/01/ML-Logistic-Regression/"
+           data-tag="MachineLearning"
+           data-author="" >
+            <span class="post-title" title="ML_Logistic_Regression">ML_Logistic_Regression</span>
+            <span class="post-date" title="2024-03-01 15:27:16">2024/03/01</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2024/02/29/Computer-Networking-Introduction/"
+           data-tag="Network"
+           data-author="" >
+            <span class="post-title" title="Computer_Networking_Introduction">Computer_Networking_Introduction</span>
+            <span class="post-date" title="2024-02-29 09:40:43">2024/02/29</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/28/MachineLearning-Introduction/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="MachineLearning_Introduction">MachineLearning_Introduction</span>
+            <span class="post-date" title="2024-02-28 09:55:36">2024/02/28</span>
+        </a>
+        
+        
+        <a  class="All OS "
+           href="/2024/02/27/OS-%E7%AC%AC%E5%85%AD%E7%AB%A0%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS_第六章文件管理">OS_第六章文件管理</span>
+            <span class="post-date" title="2024-02-27 22:03:34">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All OS "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS_第五章设备管理">OS_第五章设备管理</span>
+            <span class="post-date" title="2024-02-27 21:59:32">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All OS "
+           href="/2024/02/27/OS-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS_第四章内存管理">OS_第四章内存管理</span>
+            <span class="post-date" title="2024-02-27 21:58:12">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All OS "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%89%E7%AB%A0%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%AD%BB%E9%94%81/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS_第三章处理机调度与死锁">OS_第三章处理机调度与死锁</span>
+            <span class="post-date" title="2024-02-27 21:54:59">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All OS "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS_第二章进程管理">OS_第二章进程管理</span>
+            <span class="post-date" title="2024-02-27 21:52:08">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All OS "
+           href="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS_第一章绪论">OS_第一章绪论</span>
+            <span class="post-date" title="2024-02-27 21:18:31">2024/02/27</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/02/23/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2024-02-23 20:59:24">2024/02/23</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-贾坛" class="article article-type-post" itemscope itemprop="blogPost">
+    
+    <div class="article-meta">
+        
+        
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2024-03-02 17:07:06'>2024-03-02 14:00</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>Count:1.3k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+        <span class="top-comment" title="跳转至评论区">
+            <a href="#comments">
+                Comment:<span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </a>
+        </span>
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C1-%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84%E6%B1%82%E9%98%B6%E4%B9%98%E6%9C%AB%E5%B0%BE%E9%9B%B6%E4%B8%AA%E6%95%B0"><span class="toc-text">实验1 循环结构：求阶乘末尾零个数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF"><span class="toc-text">算法思路：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-text">实验结果</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C2%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84%E6%B1%82%E9%98%B6%E4%B9%98"><span class="toc-text">实验2循环结构：求阶乘</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF%E5%A4%A7%E6%95%B0%E7%9B%B8%E4%B9%98"><span class="toc-text">算法思路(大数相乘)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF"><span class="toc-text">优化思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9Cimage-20240302170653961"><span class="toc-text">实验结果</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E4%B8%89-%E7%BB%84%E5%90%88%E6%95%B0%E5%88%86%E8%A7%A3"><span class="toc-text">实验三 组合数分解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF-1"><span class="toc-text">算法思路：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C-1"><span class="toc-text">实验结果</span></a></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="实验1-循环结构求阶乘末尾零个数">实验1 循环结构：求阶乘末尾零个数</h1>
+<h2 id="算法思路">算法思路：</h2>
+<ul>
+<li><p>末尾0的个数取决于阶乘中5的因子的个数，故Z（N）等于阶乘中5的个数，只需写个For循环即可</p></li>
+<li><p>复杂度 O（n）</p></li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="dt">int</span> Function(<span class="dt">int</span> N) &#123;</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="dt">int</span> count = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="co">// 由于末尾零的个数取决于阶乘中5的因子个数，因此只需计算阶乘中5的个数即可</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">      <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">5</span>; N / i &gt;= <span class="dv">1</span>; i *= <span class="dv">5</span>) &#123;</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">        count += N / i;</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">    &#125;</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="cf">return</span> count;</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">&#125;</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="dt">int</span> main() &#123;</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">    <span class="dt">int</span> T;</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">    printf(<span class="st">&quot;请输入数字的个数：&quot;</span>);</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">    scanf(<span class="st">&quot;%d&quot;</span>, &amp;T);</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">    <span class="dt">int</span> results[T];</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">    <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; T; ++i) &#123;</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">        <span class="dt">int</span> N;</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">        printf(<span class="st">&quot;请输入一个正整数N：&quot;);</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">        scanf(<span class="st">&quot;%d&quot;</span>, &amp;N);</a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">        results[i] = Function(N);</a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">    &#125;</a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">    <span class="co">// 输出结果</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26">    printf(<span class="st">&quot;计算结果：</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb1-27" data-line-number="27">    <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; T; ++i) &#123;</a>
+<a class="sourceLine" id="cb1-28" data-line-number="28">        printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, results[i]);</a>
+<a class="sourceLine" id="cb1-29" data-line-number="29">    &#125;</a>
+<a class="sourceLine" id="cb1-30" data-line-number="30"></a>
+<a class="sourceLine" id="cb1-31" data-line-number="31">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb1-32" data-line-number="32">&#125;</a></code></pre></div>
+<h2 id="实验结果">实验结果</h2>
+<figure>
+<img src="/2024/03/02/%E8%B4%BE%E5%9D%9B/WeChat%20Files\wxid_05xybnqrf45n22\FileStorage\Temp\bbfe2c4b11c5c117b3707384634043d.png" alt="bbfe2c4b11c5c117b3707384634043d"><figcaption>bbfe2c4b11c5c117b3707384634043d</figcaption>
+</figure>
+<h1 id="实验2循环结构求阶乘">实验2循环结构：求阶乘</h1>
+<h2 id="算法思路大数相乘">算法思路(大数相乘)</h2>
+<ul>
+<li>注意到N在1000000000以内，直接for循环肯定会爆掉</li>
+<li>第一步，创建一个数组来存储大数，数组的大小足够大以容纳阶乘的结果</li>
+<li>第二步，实现大数相乘的函数乘法，模拟手算的流程</li>
+<li>第三步，调用第二步实现的大数相乘算法，由2迭代到n，每次都将当前数字与之前的结果相乘</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="pp">#define MAX_LONG 100000</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="dt">void</span> multiply(<span class="dt">int</span> res[], <span class="dt">int</span> x, <span class="dt">int</span> *res_size) &#123;</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="dt">int</span> carry = <span class="dv">0</span>; <span class="co">//初始化进位为0</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="co">//逐项相乘，模拟手算乘法的过程，并处理进位</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">    <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; *res_size; i++) &#123;</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">        <span class="dt">int</span> prod = res[i] * x + carry; <span class="co">//当前位相乘并加上进位</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">        res[i] = prod % <span class="dv">10</span>; <span class="co">//存储结果的个位数</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">        carry = prod / <span class="dv">10</span>;<span class="co">// 计算新的进位</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">    &#125;</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">// 处理最高位的进位</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">    <span class="cf">while</span> (carry) &#123;</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">        res[*res_size] = carry % <span class="dv">10</span>;<span class="co">// 存储结果的下一位数</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">        carry /= <span class="dv">10</span>; <span class="co">// 计算新的进位</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">        (*res_size)++; <span class="co">// 更新结果的位数</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">    &#125;</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">&#125;</a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="dt">void</span> Ans(<span class="dt">int</span> N) &#123;</a>
+<a class="sourceLine" id="cb2-22" data-line-number="22">    <span class="dt">int</span> res[MAX_LONG] = &#123;<span class="dv">0</span>&#125;; <span class="co">//初始化大数数组</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23">    res[<span class="dv">0</span>] = <span class="dv">1</span>; <span class="co">//初试阶乘结果为1</span></a>
+<a class="sourceLine" id="cb2-24" data-line-number="24">    <span class="dt">int</span> res_size = <span class="dv">1</span>;<span class="co">//初始化数组长度1</span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb2-26" data-line-number="26">    <span class="cf">for</span> (<span class="dt">int</span> x = <span class="dv">2</span>; x &lt;= N; x++)</a>
+<a class="sourceLine" id="cb2-27" data-line-number="27">        multiply(res, x, &amp;res_size);</a>
+<a class="sourceLine" id="cb2-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb2-29" data-line-number="29">    <span class="co">// 输出结果</span></a>
+<a class="sourceLine" id="cb2-30" data-line-number="30">    printf(<span class="st">&quot;%.4e</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb2-31" data-line-number="31">&#125;</a>
+<a class="sourceLine" id="cb2-32" data-line-number="32"></a>
+<a class="sourceLine" id="cb2-33" data-line-number="33"><span class="dt">int</span> main() &#123;</a>
+<a class="sourceLine" id="cb2-34" data-line-number="34">    <span class="dt">int</span> T;</a>
+<a class="sourceLine" id="cb2-35" data-line-number="35">    printf(<span class="st">&quot;请输入数字的个数：&quot;</span>);</a>
+<a class="sourceLine" id="cb2-36" data-line-number="36">    scanf(<span class="st">&quot;%d&quot;</span>, &amp;T);</a>
+<a class="sourceLine" id="cb2-37" data-line-number="37"></a>
+<a class="sourceLine" id="cb2-38" data-line-number="38">    <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; T; ++i) &#123;</a>
+<a class="sourceLine" id="cb2-39" data-line-number="39">        <span class="dt">int</span> N;</a>
+<a class="sourceLine" id="cb2-40" data-line-number="40">        printf(<span class="st">&quot;请输入一个正整数N：&quot;);</span></a>
+<a class="sourceLine" id="cb2-41" data-line-number="41">        scanf(<span class="st">&quot;%d&quot;</span>, &amp;N);</a>
+<a class="sourceLine" id="cb2-42" data-line-number="42">        Ans(N);</a>
+<a class="sourceLine" id="cb2-43" data-line-number="43">    &#125;</a>
+<a class="sourceLine" id="cb2-44" data-line-number="44"></a>
+<a class="sourceLine" id="cb2-45" data-line-number="45">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb2-46" data-line-number="46">&#125;</a></code></pre></div>
+<h2 id="优化思路">优化思路</h2>
+<ul>
+<li><figure>
+<img src="/2024/03/02/%E8%B4%BE%E5%9D%9B/桌面\贾坛\70d9f605df07447a51aa45847686ea6.png" alt="70d9f605df07447a51aa45847686ea6"><figcaption>70d9f605df07447a51aa45847686ea6</figcaption>
+</figure>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="pp">#include </span><span class="im">&lt;math.h&gt;</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="dt">double</span> Ans(<span class="dt">int</span> N) &#123;</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="dt">double</span> ans = <span class="dv">0</span>; <span class="co">// 初始化结果为0</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt;= N; ++i) &#123;</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">        ans += log10(i); <span class="co">// 累加每个数字的以10为底的对数</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">    &#125;</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">    <span class="cf">return</span> ans;</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">&#125;</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="dt">int</span> main() &#123;</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">    <span class="dt">int</span> T;</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">    printf(<span class="st">&quot;请输入数字的个数：&quot;</span>);</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">    scanf(<span class="st">&quot;%d&quot;</span>, &amp;T);</a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">    <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; T; ++i) &#123;</a>
+<a class="sourceLine" id="cb3-18" data-line-number="18">        <span class="dt">int</span> N;</a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">        printf(<span class="st">&quot;请输入一个正整数N：&quot;);</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">        scanf(<span class="st">&quot;%d&quot;</span>, &amp;N);</a>
+<a class="sourceLine" id="cb3-21" data-line-number="21">        <span class="dt">double</span> temp = Ans(N);</a>
+<a class="sourceLine" id="cb3-22" data-line-number="22">        <span class="dt">double</span> intPart, fracPart;</a>
+<a class="sourceLine" id="cb3-23" data-line-number="23">        fracPart = modf(temp, &amp;intPart); <span class="co">// 将小数与整数分离</span></a>
+<a class="sourceLine" id="cb3-24" data-line-number="24">        <span class="dt">double</span> result = pow(<span class="dv">10</span>, fracPart);</a>
+<a class="sourceLine" id="cb3-25" data-line-number="25">        printf(<span class="st">&quot;%.4lf e+%d</span><span class="sc">\n</span><span class="st">&quot;</span>, result, (<span class="dt">int</span>)intPart); <span class="co">// 输出结果</span></a>
+<a class="sourceLine" id="cb3-26" data-line-number="26">    &#125;</a>
+<a class="sourceLine" id="cb3-27" data-line-number="27"></a>
+<a class="sourceLine" id="cb3-28" data-line-number="28">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb3-29" data-line-number="29">&#125;</a></code></pre></div>
+<h2 id="实验结果image-20240302170653961">实验结果<img src="/2024/03/02/%E8%B4%BE%E5%9D%9B/桌面\贾坛\image-20240302170653961.png" alt="image-20240302170653961"></h2></li>
+</ul>
+<h1 id="实验三-组合数分解">实验三 组合数分解</h1>
+<h2 id="算法思路-1">算法思路：</h2>
+<ul>
+<li><strong>分解算法：</strong>首先对于给定N和k，我们需要找到最大的j满足C（j,i）&lt;=N，找到这样的j之后，计算其组合数，然后减去它，继续重复上述过程</li>
+<li><strong>组合数计算</strong>：
+<ul>
+<li>首先计算C（n,k）一定取最小的k，减少计算</li>
+<li>以C（8，5）为例子，分子只需计算8<em>7 </em>6 ，分母只需计算3 * 2 * 1</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co"> * 计算组合数 C(n, k) = n! / (k! * (n-k)!)</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co"> * 使用迭代方法避免大数的直接计算和减少溢出的可能性。</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co"> */</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="dt">long</span> <span class="dt">long</span> comb(<span class="dt">int</span> n, <span class="dt">int</span> k) &#123;</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">    <span class="cf">if</span> (k &gt; n) <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">    <span class="cf">if</span> (k * <span class="dv">2</span> &gt; n) k = n - k; <span class="co">// 由于 C(n, k) = C(n, n-k)，取较小的 k 以减少计算量</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">    <span class="dt">long</span> <span class="dt">long</span> result = <span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">    <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt;= k; ++i, --n) &#123;</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">        result = result * n / i; <span class="co">// 直接使用乘除法计算组合数，避免中间阶乘的大数</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">    &#125;</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">    <span class="cf">return</span> result;</a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">&#125;</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co"> * 计算组合数分解的系数并填充到数组 c 中。</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co"> * n 是要分解的数，k 是分解的项数，c 是存储系数的数组。</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co"> */</span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="dt">void</span> calcom(<span class="dt">int</span> n, <span class="dt">int</span> k, <span class="dt">int</span> c[]) &#123;</a>
+<a class="sourceLine" id="cb4-22" data-line-number="22">    <span class="cf">for</span> (<span class="dt">int</span> i = k; i &gt;= <span class="dv">1</span>; i--) &#123;</a>
+<a class="sourceLine" id="cb4-23" data-line-number="23">        <span class="dt">int</span> j = <span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb4-24" data-line-number="24">        <span class="cf">while</span> (comb(j, i) &lt;= n) &#123; <span class="co">// 查找满足条件的最大 j</span></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25">            j++;</a>
+<a class="sourceLine" id="cb4-26" data-line-number="26">        &#125;</a>
+<a class="sourceLine" id="cb4-27" data-line-number="27">        j--; <span class="co">// 回退到最后一个满足条件的 j</span></a>
+<a class="sourceLine" id="cb4-28" data-line-number="28">        c[k - i] = j; <span class="co">// 存储系数</span></a>
+<a class="sourceLine" id="cb4-29" data-line-number="29">        n -= comb(j, i); <span class="co">// 更新 n 为剩余的数</span></a>
+<a class="sourceLine" id="cb4-30" data-line-number="30">    &#125;</a>
+<a class="sourceLine" id="cb4-31" data-line-number="31">&#125;</a>
+<a class="sourceLine" id="cb4-32" data-line-number="32"></a>
+<a class="sourceLine" id="cb4-33" data-line-number="33"><span class="dt">int</span> main() &#123;</a>
+<a class="sourceLine" id="cb4-34" data-line-number="34">    <span class="dt">int</span> n, k;</a>
+<a class="sourceLine" id="cb4-35" data-line-number="35">    printf(<span class="st">&quot;请输入自然数n和k（格式为n,k）：&quot;</span>);</a>
+<a class="sourceLine" id="cb4-36" data-line-number="36">    scanf(<span class="st">&quot;%d,%d&quot;</span>, &amp;n, &amp;k); <span class="co">// 读取输入，期望格式为 n,k</span></a>
+<a class="sourceLine" id="cb4-37" data-line-number="37"></a>
+<a class="sourceLine" id="cb4-38" data-line-number="38">    <span class="dt">int</span> c[k]; <span class="co">// 存储分解系数的数组</span></a>
+<a class="sourceLine" id="cb4-39" data-line-number="39">    calcom(n, k, c); <span class="co">// 计算组合数分解的系数</span></a>
+<a class="sourceLine" id="cb4-40" data-line-number="40">    </a>
+<a class="sourceLine" id="cb4-41" data-line-number="41">    <span class="co">// 输出分解结果</span></a>
+<a class="sourceLine" id="cb4-42" data-line-number="42">    printf(<span class="st">&quot;分解结果为：</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb4-43" data-line-number="43">    <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; k; i++) &#123;</a>
+<a class="sourceLine" id="cb4-44" data-line-number="44">        printf(<span class="st">&quot;%d&quot;</span>, c[i]);</a>
+<a class="sourceLine" id="cb4-45" data-line-number="45">        <span class="cf">if</span> (i &lt; k - <span class="dv">1</span>) printf(<span class="st">&quot;, &quot;</span>); <span class="co">// 在系数间添加逗号和空格</span></a>
+<a class="sourceLine" id="cb4-46" data-line-number="46">    &#125;</a>
+<a class="sourceLine" id="cb4-47" data-line-number="47">    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb4-48" data-line-number="48">    </a>
+<a class="sourceLine" id="cb4-49" data-line-number="49">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb4-50" data-line-number="50">&#125;</a></code></pre></div>
+<h2 id="实验结果-1">实验结果</h2>
+<figure>
+<img src="/2024/03/02/%E8%B4%BE%E5%9D%9B/桌面\贾坛\89e288156cec3dcba559b4a468e5295.png" alt="89e288156cec3dcba559b4a468e5295"><figcaption>89e288156cec3dcba559b4a468e5295</figcaption>
+</figure>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 2542608082@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+    <div id="comments"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+<script type="text/javascript">
+    $.getScript('/js/gitalk.js', function () {
+        var gitalk = new Gitalk({
+            clientID: '88331acc3b966614c32b',
+            clientSecret: '8a419b84fa7486891cbfb4136409393e2511c7cc',
+            repo: 'TanJ_Blog_Comments',
+            owner: 'Paralell-JT',
+            admin: ['Paralell-JT'],
+            id: decodeURI(location.pathname),
+            distractionFreeMode: 'true',
+            language: 'zh-CN',
+            perPage: parseInt('10',10)
+        })
+        gitalk.render('comments')
+    })
+</script>
+
+
+
+
+    
+        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<input type="hidden" id="MathJax-js"
+        value="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</input>
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2023 TanJ
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>
