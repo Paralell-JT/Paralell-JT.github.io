@@ -200,7 +200,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="11">
-<input type="hidden" id="yelog_site_word_count" value="30.2k">
+<input type="hidden" id="yelog_site_word_count" value="30.7k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -408,12 +408,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-03-04 20:20:52'>2024-03-01 15:27</time>
+            Created At : <time class="date" title='Updated At: 2024-03-04 20:30:40'>2024-03-01 15:27</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:405</span>
+        <span>Count:907</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -443,7 +443,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#logistic-regression"><span class="toc-text">Logistic Regression</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="toc-text">什么是分类问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%87%E8%AE%BE%E5%87%BD%E6%95%B0%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-text">假设函数的选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0"><span class="toc-text">代价函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%B1%BB%E5%88%AB%E5%88%86%E7%B1%BB"><span class="toc-text">多类别分类</span></a></li></ol></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -459,42 +459,74 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="logistic-regression">Logistic Regression</h1>
-<h2 id="什么是分类问题">什么是分类问题</h2>
-<ul>
-<li>预测的变量是离散的值，例如：正例1，反例0</li>
-<li>算法输出的边界在0~1之间</li>
-</ul>
-<h2 id="假设函数的选择">假设函数的选择</h2>
-<ul>
-<li>常用的Sigmoid Function函数： <span class="math inline">\(g\left( z \right)=\frac{ 1 }{ 1+{ { e }^{ -z } } }\)</span>​​。</li>
-</ul>
-<figure>
-<img src="/2024/03/01/ML-Logistic-Regression/TanJBlog\source_posts\ML-Logistic-Regression\image-20240301153534631.png" alt="image-20240301153534631"><figcaption>image-20240301153534631</figcaption>
-</figure>
-<ul>
-<li><p>判断边界，根据不同的模型拟合不同的边界</p>
-<ul>
-<li><p>边界为线性函数<img src="/2024/03/01/ML-Logistic-Regression/TanJBlog\source_posts\ML-Logistic-Regression\image-20240301154638203.png" alt="image-20240301154638203"></p></li>
-<li><p>边界为多项式函数</p>
-<figure>
-<img src="/2024/03/01/ML-Logistic-Regression/TanJBlog\source_posts\ML-Logistic-Regression\image-20240301154705931.png" alt="image-20240301154705931"><figcaption>image-20240301154705931</figcaption>
-</figure></li>
-</ul></li>
-<li><p>Sigmoid + 合适的边界函数 = 假设函数</p></li>
-</ul>
-<p>​ <img src="/2024/03/01/ML-Logistic-Regression/TanJBlog\source_posts\ML-Logistic-Regression\image-20240301154850436.png" alt="image-20240301154850436"></p>
-<h2 id="代价函数">代价函数</h2>
-<ul>
-<li><p><strong>逻辑回归的拟合问题</strong>：由于我们选择的假设函数是Sigmoid函数，将其带入到线性回归的代价函数中，我们发现：我们得到的<strong>代价函数是一个具有多个局部最小值的函数，即非凸函数</strong>，这将影响到梯度下降法寻找全局最小值。<img src="/2024/03/01/ML-Logistic-Regression/TanJBlog\source_posts\ML-Logistic-Regression\image-20240301155255355.png" alt="image-20240301155255355"></p></li>
-<li><p>代价函数的选择：<img src="/2024/03/01/ML-Logistic-Regression/TanJBlog\source_posts\ML-Logistic-Regression\image-20240301155414129.png" alt="image-20240301155414129"></p>
-<ul>
-<li>当实际值为1：若<span class="math inline">\(h_{\theta } (x)\)</span>的值也为1，那么误差为0；反之，若<span class="math inline">\(h_{\theta } (x)\)</span>距离1越远，误差越大</li>
-<li>当实际值为0：若<span class="math inline">\(h_{\theta } (x)\)</span>为0，那么误差也为0；反之，若<span class="math inline">\(h_{\theta } (x)\)</span>距离0越远，那么输出的误差也就越大。</li>
-</ul>
-<p>可以看到，经过一连串的求导之后，我们得到了与线性回归同样的结果，但这并不意味着两者之间存在必然的关系。此外，除了梯度下降之外，还有一些优化的算法，这些算法比梯度下降更为高效：<strong>共轭梯度</strong>（<strong>Conjugate Gradient</strong>），<strong>局部优化法</strong>(<strong>Broyden fletcher goldfarb shann,BFGS</strong>)和<strong>有限内存局部优化法</strong>(<strong>LBFGS</strong>) （浅浅的埋个坑）</p></li>
-</ul>
-<h2 id="多类别分类">多类别分类</h2>
+        
+# Logistic Regression
+
+## 什么是分类问题
+
+- 预测的变量是离散的值，例如：正例1，反例0
+- 算法输出的边界在0~1之间
+
+## 假设函数的选择
+
+- 常用的Sigmoid Function函数： $g\left( z \right)=\frac{ 1 }{ 1+{ { e }^{ -z } } }$​​。
+
+![image-20240301153534631](https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403042025521.png)
+
+- 判断边界，根据不同的模型拟合不同的边界
+
+  - 边界为线性函数![image-20240301154638203](https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403042025523.png)
+
+  - 边界为多项式函数
+
+    ![image-20240301154705931](https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403042025524.png)
+
+- Sigmoid + 合适的边界函数 = 假设函数
+
+​	![image-20240301154850436](https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403042025525.png)
+
+ 
+
+## 代价函数
+
+- **逻辑回归的拟合问题**：由于我们选择的假设函数是Sigmoid函数，将其带入到线性回归的代价函数中，我们发现：我们得到的**代价函数是一个具有多个局部最小值的函数，即非凸函数**，这将影响到梯度下降法寻找全局最小值。![image-20240301155255355](https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403042025526.png)
+
+- 代价函数的选择：![image-20240301155414129](https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403042025527.png)
+
+  - 当实际值为1：若$h_{\theta } (x)$的值也为1，那么误差为0；反之，若$h_{\theta } (x)$距离1越远，误差越大
+  - 当实际值为0：若$h_{\theta } (x)$为0，那么误差也为0；反之，若$h_{\theta } (x)$距离0越远，那么输出的误差也就越大。
+
+- 代价函数的化简：
+
+  将构建的 $Cost\left( {h_\theta}\left( x \right),y \right)$简化如下： 
+  $Cost\left( {h_\theta}\left( x \right),y \right)=-y\times log\left( {h_\theta}\left( x \right) \right)-(1-y)\times log\left( 1-{h_\theta}\left( x \right) \right)$
+
+  带入代价函数得到：
+  $J\left( \theta  \right)=\frac{1}{m}\sum\limits_{i=1}^{m}{[-{{y}^{(i)}}\log \left( {h_\theta}\left( {{x}^{(i)}} \right) \right)-\left( 1-{{y}^{(i)}} \right)\log \left( 1-{h_\theta}\left( {{x}^{(i)}} \right) \right)]}$
+  即：$J\left( \theta  \right)=-\frac{1}{m}\sum\limits_{i=1}^{m}{[{{y}^{(i)}}\log \left( {h_\theta}\left( {{x}^{(i)}} \right) \right)+\left( 1-{{y}^{(i)}} \right)\log \left( 1-{h_\theta}\left( {{x}^{(i)}} \right) \right)]}$
+
+- 代价函数为凸函数的推导：
+ $$
+  $\frac{\partial }{\partial {\theta_{j}}}J\left( \theta  \right)=\frac{\partial }{\partial {\theta_{j}}}[-\frac{1}{m}\sum\limits_{i=1}^{m}{[-{{y}^{(i)}}\log \left( 1+{{e}^{-{\theta^{T}}{{x}^{(i)}}}} \right)-\left( 1-{{y}^{(i)}} \right)\log \left( 1+{{e}^{{\theta^{T}}{{x}^{(i)}}}} \right)]}]$
+  $=-\frac{1}{m}\sum\limits_{i=1}^{m}{[-{{y}^{(i)}}\frac{-x_{j}^{(i)}{{e}^{-{\theta^{T}}{{x}^{(i)}}}}}{1+{{e}^{-{\theta^{T}}{{x}^{(i)}}}}}-\left( 1-{{y}^{(i)}} \right)\frac{x_j^{(i)}{{e}^{{\theta^T}{{x}^{(i)}}}}}{1+{{e}^{{\theta^T}{{x}^{(i)}}}}}}]$
+  $=-\frac{1}{m}\sum\limits_{i=1}^{m}{{y}^{(i)}}\frac{x_j^{(i)}}{1+{{e}^{{\theta^T}{{x}^{(i)}}}}}-\left( 1-{{y}^{(i)}} \right)\frac{x_j^{(i)}{{e}^{{\theta^T}{{x}^{(i)}}}}}{1+{{e}^{{\theta^T}{{x}^{(i)}}}}}]$
+  $=-\frac{1}{m}\sum\limits_{i=1}^{m}{\frac{{{y}^{(i)}}x_j^{(i)}-x_j^{(i)}{{e}^{{\theta^T}{{x}^{(i)}}}}+{{y}^{(i)}}x_j^{(i)}{{e}^{{\theta^T}{{x}^{(i)}}}}}{1+{{e}^{{\theta^T}{{x}^{(i)}}}}}}$
+  $=-\frac{1}{m}\sum\limits_{i=1}^{m}{\frac{{{y}^{(i)}}\left( 1\text{+}{{e}^{{\theta^T}{{x}^{(i)}}}} \right)-{{e}^{{\theta^T}{{x}^{(i)}}}}}{1+{{e}^{{\theta^T}{{x}^{(i)}}}}}x_j^{(i)}}$
+  $=-\frac{1}{m}\sum\limits_{i=1}^{m}{({{y}^{(i)}}-\frac{{{e}^{{\theta^T}{{x}^{(i)}}}}}{1+{{e}^{{\theta^T}{{x}^{(i)}}}}})x_j^{(i)}}$
+  $=-\frac{1}{m}\sum\limits_{i=1}^{m}{({{y}^{(i)}}-\frac{1}{1+{{e}^{-{\theta^T}{{x}^{(i)}}}}})x_j^{(i)}}$
+  $=-\frac{1}{m}\sum\limits_{i=1}^{m}{[{{y}^{(i)}}-{h_\theta}\left( {{x}^{(i)}} \right)]x_j^{(i)}}$
+  $=\frac{1}{m}\sum\limits_{i=1}^{m}{[{h_\theta}\left( {{x}^{(i)}} \right)-{{y}^{(i)}}]x_j^{(i)}}$
+ $$
+  可以看到，经过一连串的求导之后，我们得到了与线性回归同样的结果，但这并不意味着两者之间存在必然的关系。此外，除了梯度下降之外，还有一些优化的算法，这些算法比梯度下降更为高效：**共轭梯度**（**Conjugate Gradient**），**局部优化法**(**Broyden fletcher goldfarb shann,BFGS**)和**有限内存局部优化法**(**LBFGS**)  （浅浅的埋个坑）
+
+  
+
+  
+
+## 多类别分类
+
+
+
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 2542608082@qq.com </span>
