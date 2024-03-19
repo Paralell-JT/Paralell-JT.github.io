@@ -3,18 +3,36 @@
 <head>
   <meta charset="utf-8">
   <title>Computer_Network_TransLayer | TanJ_Blog</title>
-  <meta name="keywords" content="">
+  <meta name="keywords" content=" Network ">
   <meta name="description" content="Computer_Network_TransLayer | TanJ_Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="Trans_Layer 传输层概述 传输层的功能  为运行在不同主机上的应用进程提供逻辑通信 传输协议运行在端系统  发送方：将应用层的报文分成报文段，然后传递给网络层 接收方：将报文段重组成报文，然后传递给应用层   复用和分用（multiplexing &#x2F; demultiplexing） 传输协议  TCP&#x2F;UDP   传输层 VS. 网络层  网络层服务：主机之间的逻辑通信 传输层服务：进程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Computer_Network_TransLayer">
 <meta property="og:url" content="http://example.com/2024/03/18/Computer-Network-TransLayer/index.html">
 <meta property="og:site_name" content="TanJ_Blog">
+<meta property="og:description" content="Trans_Layer 传输层概述 传输层的功能  为运行在不同主机上的应用进程提供逻辑通信 传输协议运行在端系统  发送方：将应用层的报文分成报文段，然后传递给网络层 接收方：将报文段重组成报文，然后传递给应用层   复用和分用（multiplexing &#x2F; demultiplexing） 传输协议  TCP&#x2F;UDP   传输层 VS. 网络层  网络层服务：主机之间的逻辑通信 传输层服务：进程">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917835.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917836.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917837.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917838.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917839.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917840.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403181932494.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917841.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917842.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917843.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917844.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917845.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917846.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917847.png">
 <meta property="article:published_time" content="2024-03-18T02:50:52.000Z">
-<meta property="article:modified_time" content="2024-03-18T02:50:52.948Z">
+<meta property="article:modified_time" content="2024-03-19T11:18:12.774Z">
 <meta property="article:author" content="Tan J">
+<meta property="article:tag" content="Network">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917835.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -152,7 +170,7 @@
         <div data-rel="Network">
             
             Network
-            <small>(2)</small>
+            <small>(3)</small>
         </div>
         
     </li>
@@ -193,7 +211,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="13">
-<input type="hidden" id="yelog_site_word_count" value="32.9k">
+<input type="hidden" id="yelog_site_word_count" value="36.3k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -258,9 +276,9 @@
     <nav id="title-list-nav">
         
         
-        <a  class="All "
+        <a  class="All Network "
            href="/2024/03/18/Computer-Network-TransLayer/"
-           data-tag=""
+           data-tag="Network"
            data-author="" >
             <span class="post-title" title="Computer_Network_TransLayer">Computer_Network_TransLayer</span>
             <span class="post-date" title="2024-03-18 10:50:52">2024/03/18</span>
@@ -400,16 +418,31 @@
         
         
         
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Network">Network</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color3">Network</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-03-18 10:50:52'>2024-03-18 10:50</time>
+            Created At : <time class="date" title='Updated At: 2024-03-19 19:18:12'>2024-03-18 10:50</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:0</span>
+        <span>Count:3.4k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -439,7 +472,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Trans-Layer"><span class="toc-text">Trans_Layer</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E5%B1%82%E6%A6%82%E8%BF%B0"><span class="toc-text">传输层概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E5%B1%82%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-text">传输层的功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E4%B8%8E%E8%A7%A3%E5%A4%8D%E7%94%A8"><span class="toc-text">多路复用与解复用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">多路复用与解复用的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E8%B7%AF%E8%A7%A3%E5%A4%8D%E7%94%A8%E4%B8%ADUDP%E4%B8%8ETCP%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">多路解复用中UDP与TCP的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E8%BF%9E%E6%8E%A5%E4%BC%A0%E8%BE%93%EF%BC%9AUDP%EF%BC%88User-Datagram-Protocol%EF%BC%89"><span class="toc-text">无连接传输：UDP（User Datagram Protocol）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#UDP%E4%BC%A0%E8%BE%93%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">UDP传输的特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UDP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F%E4%BB%A5%E5%8F%8AUDP%E6%A0%A1%E9%AA%8C%E5%92%8C"><span class="toc-text">UDP报文格式以及UDP校验和</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#UDP%E6%8A%A5%E6%96%87%E7%BB%84%E6%88%90-%E5%A4%B4%E9%83%A8-%E6%95%B0%E6%8D%AE"><span class="toc-text">UDP报文组成:头部+数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#UDP%E6%A0%A1%E9%AA%8C%E5%92%8C"><span class="toc-text">UDP校验和</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%9D%A0%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-text">可靠数据传输的原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E9%9D%A0%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E6%A6%82%E8%BF%B0%EF%BC%88Reliable-Data-Trans%EF%BC%89"><span class="toc-text">可靠数据传输概述（Reliable Data Trans）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E5%8F%AF%E9%9D%A0%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE"><span class="toc-text">构建可靠数据传输协议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Rdt1-0%EF%BC%9A%E5%9C%A8%E5%8F%AF%E9%9D%A0%E4%BF%A1%E9%81%93%E4%B8%8A%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93"><span class="toc-text">Rdt1.0：在可靠信道上的可靠数据传输</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Rdt2-0%EF%BC%9A%E5%85%B7%E6%9C%89%E6%AF%94%E7%89%B9%E5%B7%AE%E9%94%99%E7%9A%84%E4%BF%A1%E9%81%93"><span class="toc-text">Rdt2.0：具有比特差错的信道</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Rdt2-1%EF%BC%9A2-0%E7%89%88%E6%9C%AC%E7%9A%84%E4%BF%AE%E8%AE%A2%E7%89%88"><span class="toc-text">Rdt2.1：2.0版本的修订版</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Rdt-2-2%EF%BC%9A%E6%97%A0NAK%E7%9A%84%E5%8D%8F%E8%AE%AE"><span class="toc-text">Rdt 2.2：无NAK的协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Rdt-3-0-%E5%85%B7%E6%9C%89%E6%AF%94%E7%89%B9%E5%B7%AE%E9%94%99%E5%92%8C%E5%88%86%E7%BB%84%E4%B8%A2%E5%A4%B1%E7%9A%84%E4%BF%A1%E9%81%93"><span class="toc-text">Rdt 3.0:具有比特差错和分组丢失的信道</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%8F%AF%E9%9D%A0%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE"><span class="toc-text">流水线可靠数据传输协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GBN%E5%8D%8F%E8%AE%AE%EF%BC%88%E5%9B%9E%E9%80%80N%E6%AD%A5-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%8D%8F%E8%AE%AE%EF%BC%89"><span class="toc-text">GBN协议（回退N步&#x2F;滑动窗口协议）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SR%E5%8D%8F%E8%AE%AE%EF%BC%88%E9%80%89%E6%8B%A9%E9%87%8D%E4%BC%A0%EF%BC%89"><span class="toc-text">SR协议（选择重传）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E7%9A%84%E4%BC%A0%E8%BE%93%EF%BC%9A"><span class="toc-text">面向连接的传输：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP%E6%A6%82%E8%BF%B0%EF%BC%88Trans-Control-Protocol%EF%BC%89"><span class="toc-text">TCP概述（Trans Control Protocol）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP%E6%8A%A5%E6%96%87%E6%AE%B5%E7%BB%93%E6%9E%84"><span class="toc-text">TCP报文段结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">拥塞控制原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="toc-text">TCP拥塞控制</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -455,7 +488,259 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="Trans-Layer"><a href="#Trans-Layer" class="headerlink" title="Trans_Layer"></a>Trans_Layer</h1>
+<h2 id="传输层概述"><a href="#传输层概述" class="headerlink" title="传输层概述"></a>传输层概述</h2>
+<h3 id="传输层的功能"><a href="#传输层的功能" class="headerlink" title="传输层的功能"></a>传输层的功能</h3>
+<ul>
+<li>为运行在不同主机上的<strong>应用进程提供逻辑通信</strong></li>
+<li>传输协议运行在端系统
+<ul>
+<li>发送方：将应用层的报文分成<strong>报文段</strong>，然后传递给网络层</li>
+<li>接收方：将报文段<strong>重组成报文</strong>，然后传递给应用层</li>
+</ul>
+</li>
+<li><strong>复用和分用</strong>（multiplexing / demultiplexing）</li>
+<li>传输协议
+<ul>
+<li>TCP/UDP</li>
+</ul>
+</li>
+<li><strong>传输层 VS. 网络层</strong>
+<ul>
+<li>网络层服务：<strong>主机之间的逻辑通信</strong></li>
+<li>传输层服务：<strong>进程间的逻辑通信</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="多路复用与解复用"><a href="#多路复用与解复用" class="headerlink" title="多路复用与解复用"></a>多路复用与解复用</h2>
+<h3>多路复用与解复用的概念<img src="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917835.png" alt="多路复用与解复用"></h3>
+<ul>
+<li>多路复用：在<strong>发送方主机</strong>多路复用，从<strong>多个套接字接收来自多个进程的报文</strong>，根据<strong>Socket对应的IP地址和端口号</strong>等信息对报文段用头部加以封装</li>
+<li>多路解复用：在<strong>接收方主机</strong>多路解复用，根据报文段的头部信息中的<strong>IP地址和port</strong>将接收到的报文段发给<strong>正确的Socket</strong></li>
+</ul>
+<h3 id="多路解复用中UDP与TCP的区别"><a href="#多路解复用中UDP与TCP的区别" class="headerlink" title="多路解复用中UDP与TCP的区别"></a>多路解复用中UDP与TCP的区别</h3>
+<ul>
+<li>
+<p><strong>多路解复用工作原理</strong></p>
+<ul>
+<li>
+<p><strong>UDP Socket编程</strong>（引）<img src="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917836.png" alt="UDP_Socket"></p>
+<ul>
+<li><strong>无连接</strong>：指的是在客户端和服务器之间<strong>没有连接，没有握手</strong></li>
+<li>Socket是一个二元组,仅<strong>指定目标的IP和Port</strong></li>
+<li>服务器必须从收到的分组中提取出<strong>发送端的IP和Port</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>TCP Socket编程</strong><img src="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917837.png" alt="TCP_Socket"></p>
+<ul>
+<li><strong>有连接</strong></li>
+<li>Socket是一个<strong>四元组</strong>，<strong>源IP、Port,目标IP、Port</strong></li>
+</ul>
+</li>
+<li>
+<p>UDP（无连接）多路解复用</p>
+<ul>
+<li>
+<p>解复用是由运输层到应用层的过程，将数据报解封装，定位到对应的Socket</p>
+</li>
+<li>
+<p>由于UDP Socket是一个二元组，那么对于目标IP和Port一致的数据报被定位到相同的Socket</p>
+</li>
+</ul>
+</li>
+<li>
+<p>TCP多路解复用</p>
+<ul>
+<li>TCP是有连接的协议，所以根据四元组的信息定位Socket，只有四元组的信息完全一致，才定位到同一个Socket</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>多路复用工作原理</strong></p>
+<ul>
+<li>多路复用则是数据报<strong>由应用层封装到运输层</strong>的过程</li>
+<li>UDP（无连接）多路复用：由于UDP的Socket是二元组，没有源IP和Port，所以在运输层中，运输层为数据报加上源端口号和目的端口号，网络层再为数据报封装上源IP和目的IP</li>
+<li>TCP多路复用</li>
+</ul>
+</li>
+</ul>
+<h2 id="无连接传输：UDP（User-Datagram-Protocol）"><a href="#无连接传输：UDP（User-Datagram-Protocol）" class="headerlink" title="无连接传输：UDP（User Datagram Protocol）"></a>无连接传输：UDP（User Datagram Protocol）</h2>
+<h3 id="UDP传输的特点"><a href="#UDP传输的特点" class="headerlink" title="UDP传输的特点"></a>UDP传输的特点</h3>
+<ul>
+<li><strong>无连接，不可靠</strong>，协议数据单元为<strong>用户数据报</strong>。<strong>可靠性差，但传输效率好，实时性好</strong>。适用于只对数据传输的实时性要求较高，但对传输质量要求低的场景，如<strong>在线语音、视频聊天</strong>等。</li>
+<li>在传送数据之前**不需要先建立连接。**发送完数据后，不需要接到对方的确认。</li>
+<li>虽然 UDP 不提供可靠交付，但在某些情况下 UDP 是一种最有效的工作方式（例如<strong>流式媒体运输</strong>，如视频电话等）</li>
+<li>UDP 是<strong>面向报文</strong>的。UDP 对应用层交下来的报文，既不合并，也不拆分，而是<strong>保留这些报文的边界</strong>。UDP 一次交付一个<strong>完整的报文</strong>。</li>
+<li>UDP 没有<strong>拥塞控制</strong>，因此网络出现的拥塞不会使源主机的发送速率降低。这对某些实时应用是很重要的。<strong>很适合多媒体通信（如IP电话、视频会议）的要求</strong>。 （但是，如果多个源主机上的进程使用UDP同时向网络发送实时视频流时，可能导致拥塞）</li>
+<li>常用UDP的应用和应用层协议：<strong>DNS、TFTP、RIP、DHCP、SNMP、NFS、IGMP等</strong></li>
+</ul>
+<h3 id="UDP报文格式以及UDP校验和"><a href="#UDP报文格式以及UDP校验和" class="headerlink" title="UDP报文格式以及UDP校验和"></a>UDP报文格式以及UDP校验和</h3>
+<p><img src="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917838.png" alt="UDP报文格式"></p>
+<h4 id="UDP报文组成-头部-数据"><a href="#UDP报文组成-头部-数据" class="headerlink" title="UDP报文组成:头部+数据"></a>UDP报文组成:头部+数据</h4>
+<ul>
+<li>其中头<strong>部只有4个字段</strong>：<strong>源端口、目的端口、报文长度、校验和</strong>，共计<strong>8个字节</strong></li>
+<li>这四部分均占16位，即2字节，共计8字节</li>
+<li>UDP支持的最长报文长度：由于报文长度占16位，故理论上UDP报文可达<svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="0.036ex" height="0.036ex" role="img" focusable="false" viewbox="0 0 16 16" xmlns:xlink="http://www.w3.org/1999/xlink"><defs/><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"/></g></svg> 2^{16}<svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="0.036ex" height="0.036ex" role="img" focusable="false" viewbox="0 0 16 16" xmlns:xlink="http://www.w3.org/1999/xlink"><defs/><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"/></g></svg>​ 字节，也即65535字节，除去头部8字节，为65535-8字节；另一方面，UDP数据报还要加上IP包头部，其中IP包头部又占20字节，故最终其数据报最大可达：65535-8-20</li>
+</ul>
+<h4 id="UDP校验和"><a href="#UDP校验和" class="headerlink" title="UDP校验和"></a>UDP校验和</h4>
+<ul>
+<li>发送方
+<ul>
+<li>将报文段的ip为头部、UDP头部和数据部分拼成一个16位的二进制数</li>
+<li>校验和：报文段的加法和（1的补运算）</li>
+<li>将校验和放在UDP的校验和字段</li>
+</ul>
+</li>
+<li>接收方
+<ul>
+<li>计算接收到的报文段的校验和</li>
+<li>检查计算出的校验和与校验和字段的内容是否相等</li>
+<li>若相等：没有检测到差错，但也许还是有差错；若不相等：检查到差错</li>
+</ul>
+</li>
+</ul>
+<h2 id="可靠数据传输的原理"><a href="#可靠数据传输的原理" class="headerlink" title="可靠数据传输的原理"></a>可靠数据传输的原理</h2>
+<h3 id="可靠数据传输概述（Reliable-Data-Trans）"><a href="#可靠数据传输概述（Reliable-Data-Trans）" class="headerlink" title="可靠数据传输概述（Reliable Data Trans）"></a>可靠数据传输概述（Reliable Data Trans）</h3>
+<p><img src="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917839.png" alt="rdt框架"></p>
+<blockquote>
+<p>如图是<strong>可靠数据传输的框架</strong>，为上层实体提供的服务抽象是：数据可以通过一条<strong>可靠的信道进行传输</strong>，借助<strong>可靠信道</strong>，<strong>传输数据比特不会受到损坏或丢失</strong>，而且所有数据都是<strong>按照发送顺序交付的</strong></p>
+</blockquote>
+<h3 id="构建可靠数据传输协议"><a href="#构建可靠数据传输协议" class="headerlink" title="构建可靠数据传输协议"></a>构建可靠数据传输协议</h3>
+<h4 id="Rdt1-0：在可靠信道上的可靠数据传输"><a href="#Rdt1-0：在可靠信道上的可靠数据传输" class="headerlink" title="Rdt1.0：在可靠信道上的可靠数据传输"></a>Rdt1.0：在可靠信道上的可靠数据传输</h4>
+<ul>
+<li>下层的信道是完全可靠的：没有比特出错，没有分组丢失</li>
+<li>发送方和接收方的FSM（有限状态机）<img src="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917840.png" alt="rdt1.0">
+<ol>
+<li>如上图所示，rdt的发送端通过rdt_send(data)事件将来自上层的数据处理，并通过make_pkt进行分组，并将分组发送到信道中</li>
+<li>如图b，rdt的接收端通过rdt_rcv(packet)将来自下层的分组接收，并通过动作extract将分组中取出数据data，然后将数据交给上层</li>
+</ol>
+</li>
+</ul>
+<h4 id="Rdt2-0：具有比特差错的信道"><a href="#Rdt2-0：具有比特差错的信道" class="headerlink" title="Rdt2.0：具有比特差错的信道"></a>Rdt2.0：具有比特差错的信道</h4>
+<ul>
+<li>
+<p><strong>下层信道可能会出错</strong>：将分组中的比特翻转，继续<strong>假定所有发送的分组不会丢失，所有分组(虽然比特可能受损)将按其发送的顺序被接收。</strong></p>
+</li>
+<li>
+<p>解决办法：通过<strong>校验和</strong>来检测比特差错</p>
+</li>
+<li>
+<p>怎么从差错中恢复？</p>
+<ul>
+<li><strong>（ACK）</strong>：接收方显式地告诉发送方分组已被正确接收</li>
+<li><strong>（NAK）</strong>：接收方显式地告诉发送方分组发生了差错，发送方受到NAK之后，<strong>进行分组重传</strong></li>
+</ul>
+</li>
+<li>
+<p>FSM描述</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403181932494.png" alt="rdt2.0"></p>
+<ol>
+<li>对于发送方，若收到NAK则需要分组重传；若收到ACK则不必重传</li>
+<li>对于接收方，对接收的分组进行差错校验，若发生错误，向发送方发送NAK，反之发送ACK</li>
+</ol>
+</li>
+</ul>
+<h4 id="Rdt2-1：2-0版本的修订版"><a href="#Rdt2-1：2-0版本的修订版" class="headerlink" title="Rdt2.1：2.0版本的修订版"></a>Rdt2.1：2.0版本的修订版</h4>
+<ul>
+<li>rdt2.0<strong>有一个致命缺陷</strong>,即没有考虑ACK/NAK分组受损的情况以及纠正ACK/NCK分组中的差错，当ACK/NAK分组受损，发送方无法知道接收方是否正确接收了发送的数据，就无法进行下一步相应</li>
+<li><strong>解决方案</strong>：引入了<strong>冗余分组</strong>，即发送方收到受损的ACK/NCK不知道接收方的意思时，只需要重传当前的分组即可，<strong>这种方法的问题</strong>：接收方不知道它上次发送的ACK/NAK是否被发送方正确地收到，<strong>因此它并不知道到达的分组是新的分组还是一次重传</strong>,<strong>解决这个办法的办法是</strong>：在数据分组中添加一个新字段，让发送方<strong>对其数据分组编号</strong>，即将发送<strong>数据的序号</strong>放在该字段，就知道是否是重传的分组</li>
+<li>rdt2.1的实例运行<img src="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917841.png" alt="rdt2.1"></li>
+</ul>
+<h4 id="Rdt-2-2：无NAK的协议"><a href="#Rdt-2-2：无NAK的协议" class="headerlink" title="Rdt 2.2：无NAK的协议"></a>Rdt 2.2：无NAK的协议</h4>
+<ul>
+<li>功能和rdt2.1几乎一致，但是接收方只是用ACK（<strong>ACK需要进行编号</strong>）</li>
+<li>接收方对<strong>最后正确接收的分组发ACK</strong>，以代替NAK</li>
+<li>若发送方收到重复的NAK,则需要进行分组重传</li>
+<li>rdt2.2的运行实例<img src="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917842.png" alt="rdt2.2"></li>
+</ul>
+<h4 id="Rdt-3-0-具有比特差错和分组丢失的信道"><a href="#Rdt-3-0-具有比特差错和分组丢失的信道" class="headerlink" title="Rdt 3.0:具有比特差错和分组丢失的信道"></a>Rdt 3.0:具有比特差错和分组丢失的信道</h4>
+<ul>
+<li>
+<p><strong>假定下层信道除了比特受损，还会丢包</strong>，<strong>但所有分组还是按照其发送的顺序接收</strong></p>
+</li>
+<li>
+<p>Rdt3.0在2.2的基础上解决<strong>丢包问题</strong>，因此引入了<strong>超时重传机制</strong>，为了实现这个机制，引入了一个<strong>倒计数定时器</strong>，当发送方每发送一个分组，便启动一个定时器，定时器中断，采取适当动作，终止定时器。</p>
+</li>
+<li>
+<p>Rdt3.0的性能分析：如下图所示，<strong>每次收到ACK确认后发送方才发送下一个分组，效率极低</strong><img src="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917843.png" alt="Rdt3.0_停等"></p>
+</li>
+</ul>
+<h4 id="流水线可靠数据传输协议"><a href="#流水线可靠数据传输协议" class="headerlink" title="流水线可靠数据传输协议"></a>流水线可靠数据传输协议</h4>
+<ul>
+<li>在Rdt3.0的基础上<strong>提高链路的利用率</strong>，<strong>允许发送方在未得到对方确认的情况下发送多个分组</strong></li>
+<li>必须增加序号的范围</li>
+<li>在发送方/接收方都要<strong>设置缓冲区</strong>：对于<strong>发送方</strong>，<strong>缓冲区大小至少为已发送但没有确认分组的大小</strong>；对于<strong>接收方，缓冲区大小至少为接收成功的分组大小</strong></li>
+<li>两种通用的流水线协议：<strong>GBN【回退N步】和SR【选择重传】</strong></li>
+</ul>
+<h4 id="GBN协议（回退N步-滑动窗口协议）"><a href="#GBN协议（回退N步-滑动窗口协议）" class="headerlink" title="GBN协议（回退N步/滑动窗口协议）"></a>GBN协议（回退N步/滑动窗口协议）</h4>
+<ul>
+<li>GBN协议依赖于一个<strong>滑动窗口</strong>，要求未确认的分组数<strong>不能超过最大允许数</strong>N</li>
+<li><strong>虚拟窗口</strong>的设置：<img src="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917844.png" alt="Slide_Window">
+<ul>
+<li><strong>基序号（base)</strong>:最早未确认分组的序号</li>
+<li><strong>nextseqnum</strong>：下一个待发送分组的序号</li>
+<li>该窗口分为<strong>四段</strong>：<strong>第一段为已发送已确认分组，第二段为已发送未确认分组，第三段为未发送待发送分组，第四段为未发送分组</strong></li>
+</ul>
+</li>
+<li>GBN存在的问题：接收方为了<strong>防止分组乱序，丢弃大量分组</strong>，<strong>浪费资源</strong><img src="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917845.png" alt="clip_image015">
+<ul>
+<li>如上图所示：<strong>窗口长度为4</strong>个分组的GBN协议的运行情况；</li>
+<li>发送方首先发送分组0~3，然后在继续发送之前，必须等待直到一个或多个分组被确认。</li>
+<li>当接收到每一个连续的ACK(如ACK 0、ACK 1)，该窗口便向前滑动，发送方就可以发送新的分组(分组4和分组5)。</li>
+<li>在接收方，<strong>分组2丢失</strong>，因此在分组3到达时发现不是与1连续的分组，就丢弃分组3并发送<strong>ACK 1</strong>(分组1)。</li>
+<li>在发送方未超时重新发送分组2，并接收到分组2的反馈分组之前，为了保证到达的分组有序，<strong>其余到达接收方的分组都会被丢弃。</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="SR协议（选择重传）"><a href="#SR协议（选择重传）" class="headerlink" title="SR协议（选择重传）"></a>SR协议（选择重传）</h4>
+<ul>
+<li>
+<p><strong>避免“GBN中单个分组出错或丢失就会引起大量的分组被重传”的问题</strong>，选择重传通过让发送方<strong>仅重传那些它怀疑在接收方出错的分组而避免不必要的重传。</strong></p>
+</li>
+<li>
+<p><strong>SR的解决方案</strong><img src="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917846.png" alt="SR"></p>
+<ul>
+<li><strong>发送方的动作</strong>
+<ol>
+<li><strong>从上层接收数据</strong>，当从上层接收到数据后，SR发送方检查下一个可用于该分组的序号。如果序号位于发送方的窗口内，则将数据打包并发送；否则就像在GBN中一样，要么将数据缓存，要么将其返回给上层以便以后传输。</li>
+<li><strong>超时。<strong>仍采用定时器防止丢失分组，但是</strong>与GBN不同的是</strong>，现在<strong>每个分组必须拥有自己的逻辑定时器</strong>，因为超时发生后只能发送该超时的分组。可以使用单个硬件定时器模拟多个逻辑定时器的操作。</li>
+<li>**收到ACK。**如果收到ACK，倘若该分组序号在窗口内，则SR发送方将那个确认的分组标记为已接收。如果该分组序号等于send_base(即窗口内第一个发送的分组被正确接收)，<strong>则窗口基序号向前移动到具有最小序号的未被确认的分组处</strong>。如果窗口移动了并且有序号落在窗口内的未发送分组，则发送这些分组。</li>
+</ol>
+</li>
+<li><strong>接受方的动作</strong>（只考虑<strong>窗口内及窗口前</strong>面的分组）
+<ol>
+<li>**序号在[rcv_base，rcv_base+N-1]内的分组被正确接收。**此情况下，<strong>收到的分组落在接收方的窗口内</strong>，一个选择ACK被反馈给发送方。如果该分组以前没有收到过，则缓存该分组。<strong>如果该分组的序号等于接收窗口的基序号，则该分组以及以前缓存的序号连续的分组交付给上层</strong>。然后，接收窗口按向前移动分组的编号并向上交付这些分组。</li>
+<li>**序号在[rcv_base-N，rcv_base-1]内的分组被正确接收到。**此情况下，必须产生一个ACK，即使该分组是接收方以前已确认过的分组。</li>
+<li>**其他情况。**忽略该分组。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>SR实例</strong><img src="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917847.png" alt="SR-实例"></p>
+</li>
+</ul>
+<h2 id="面向连接的传输："><a href="#面向连接的传输：" class="headerlink" title="面向连接的传输："></a>面向连接的传输：</h2>
+<h3 id="TCP概述（Trans-Control-Protocol）"><a href="#TCP概述（Trans-Control-Protocol）" class="headerlink" title="TCP概述（Trans Control Protocol）"></a>TCP概述（Trans Control Protocol）</h3>
+<ul>
+<li><strong>面向连接</strong>：TCP是一种面向连接的协议，在数据传输之前必须先建立连接，然后再进行数据传输，数据传输完成后，再释放连接。</li>
+<li><strong>全双工</strong>：数据双向流动</li>
+<li><strong>面向字节流</strong>：将数据视为连续的字节流进行传输，而不是将数据划分为消息或数据包，没有报文边界</li>
+<li><strong>拥塞控制</strong></li>
+<li><strong>流量控制</strong></li>
+</ul>
+<h3 id="TCP报文段结构"><a href="#TCP报文段结构" class="headerlink" title="TCP报文段结构"></a>TCP报文段结构</h3>
+<h2><strong>拥塞控制</strong>原理</h2>
+<h2 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h2>
+<blockquote>
+<p><strong>参考文献：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/privateNotesOfAidanChen/p/14042774.html">可靠数据传输原理 - Aidan_Chen - 博客园 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://hillzhang1999.gitee.io/2020/05/22/ji-suan-ji-wang-luo-quan-bu-fu-xi-bi-ji/#toc-heading-14">φ(゜▽゜*)♪咦，又好了！ (gitee.io)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1JV411t7ow/?spm_id_from=333.337.search-card.all.click&amp;vd_source=97a726d90a567bf1ba72fd2932c34eda">中科大郑烇、杨坚全套《计算机网络（自顶向下方法 第7版，James F.Kurose，Keith W.Ross）》课程_哔哩哔哩_bilibili</a></p>
+</blockquote>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 2542608082@qq.com </span>
     </div>

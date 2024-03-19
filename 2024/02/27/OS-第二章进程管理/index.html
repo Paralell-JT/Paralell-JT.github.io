@@ -6,15 +6,33 @@
   <meta name="keywords" content=" OS ">
   <meta name="description" content="OS_第二章进程管理 | TanJ_Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="Trans_Layer 传输层概述 传输层的功能  为运行在不同主机上的应用进程提供逻辑通信 传输协议运行在端系统  发送方：将应用层的报文分成报文段，然后传递给网络层 接收方：将报文段重组成报文，然后传递给应用层   复用和分用（multiplexing &#x2F; demultiplexing） 传输协议  TCP&#x2F;UDP   传输层 VS. 网络层  网络层服务：主机之间的逻辑通信 传输层服务：进程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Computer_Network_TransLayer">
 <meta property="og:url" content="http://example.com/2024/03/18/Computer-Network-TransLayer/index.html">
 <meta property="og:site_name" content="TanJ_Blog">
+<meta property="og:description" content="Trans_Layer 传输层概述 传输层的功能  为运行在不同主机上的应用进程提供逻辑通信 传输协议运行在端系统  发送方：将应用层的报文分成报文段，然后传递给网络层 接收方：将报文段重组成报文，然后传递给应用层   复用和分用（multiplexing &#x2F; demultiplexing） 传输协议  TCP&#x2F;UDP   传输层 VS. 网络层  网络层服务：主机之间的逻辑通信 传输层服务：进程">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917835.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917836.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917837.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917838.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917839.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917840.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403181932494.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917841.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917842.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917843.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917844.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917845.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917846.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917847.png">
 <meta property="article:published_time" content="2024-03-18T02:50:52.000Z">
-<meta property="article:modified_time" content="2024-03-18T02:50:52.948Z">
+<meta property="article:modified_time" content="2024-03-19T11:18:12.774Z">
 <meta property="article:author" content="Tan J">
+<meta property="article:tag" content="Network">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403191917835.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -152,7 +170,7 @@
         <div data-rel="Network">
             
             Network
-            <small>(2)</small>
+            <small>(3)</small>
         </div>
         
     </li>
@@ -193,7 +211,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="13">
-<input type="hidden" id="yelog_site_word_count" value="32.9k">
+<input type="hidden" id="yelog_site_word_count" value="36.3k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -258,9 +276,9 @@
     <nav id="title-list-nav">
         
         
-        <a  class="All "
+        <a  class="All Network "
            href="/2024/03/18/Computer-Network-TransLayer/"
-           data-tag=""
+           data-tag="Network"
            data-author="" >
             <span class="post-title" title="Computer_Network_TransLayer">Computer_Network_TransLayer</span>
             <span class="post-date" title="2024-03-18 10:50:52">2024/03/18</span>
