@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>MachineLearning_Introduction | TanJ_Blog</title>
-  <meta name="keywords" content=" ML ">
-  <meta name="description" content="MachineLearning_Introduction | TanJ_Blog">
+  <title>Computer_Network-LinkLayer | TanJ_Blog</title>
+  <meta name="keywords" content=" Network ">
+  <meta name="description" content="Computer_Network-LinkLayer | TanJ_Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="LinkLayer 链路层概述  链路层的功能：从一个节点通过链路将数据报发送到相邻的物理节点 不同的链路协议提供不同的服务 **数据单元是数据帧，**将数据包封装在帧中，在帧的头部使用MAC地址来标识源和目标 流量控制:使得相邻的发送和接收方节点的速度匹配 错误检测：差错由信号衰减和噪声引起 差错纠正：接收端检查和纠正bit错误，不通过重传来纠正错误 半双工和全双工：链路可以双向传输，但一次只有">
 <meta property="og:type" content="article">
@@ -433,9 +433,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-MachineLearning-Introduction" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Computer-Network-LinkLayer" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">MachineLearning_Introduction</h1>
+        <h1 class="article-title">Computer_Network-LinkLayer</h1>
     
     <div class="article-meta">
         
@@ -445,7 +445,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="ML">ML</a>
+            <a  data-rel="Network">Network</a>
             
         </span>
         
@@ -453,19 +453,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">ML</a>
+            <a class="color3">Network</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-03-20 12:00:15'>2024-02-28 09:55</time>
+            Created At : <time class="date" title='Updated At: 2024-03-24 20:42:41'>2024-03-24 18:34</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:0</span>
+        <span>Count:775</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -495,7 +495,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LinkLayer"><span class="toc-text">LinkLayer</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%BE%E8%B7%AF%E5%B1%82%E6%A6%82%E8%BF%B0"><span class="toc-text">链路层概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%BE%E8%B7%AF%E5%B1%82%E4%BD%BF%E7%94%A8%E7%9A%84%E4%BF%A1%E9%81%93"><span class="toc-text">链路层使用的信道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LANs"><span class="toc-text">LANs</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -511,7 +511,42 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="LinkLayer"><a href="#LinkLayer" class="headerlink" title="LinkLayer"></a>LinkLayer</h1>
+<h2 id="链路层概述"><a href="#链路层概述" class="headerlink" title="链路层概述"></a>链路层概述</h2>
+<ul>
+<li><strong>链路层的功能</strong>：从<strong>一个节点</strong>通过<strong>链路</strong>将数据报发送到<strong>相邻的物理节点</strong></li>
+<li><strong>不同的链路协议提供不同的服务</strong></li>
+<li>**数据单元是数据帧，**将数据包封装在帧中，在帧的头部使用MAC地址来标识源和目标</li>
+<li><strong>流量控制</strong>:使得相邻的发送和接收方节点的速度匹配</li>
+<li><strong>错误检测</strong>：差错由信号衰减和噪声引起</li>
+<li><strong>差错纠正</strong>：接收端检查和纠正bit错误，不通过重传来纠正错误</li>
+<li><strong>半双工和全双工</strong>：链路可以双向传输，但一次只有一个方向<img src="https://cdn.jsdelivr.net/gh/Paralell-JT/Blog_ImageBed/ImageBed/202403242042294.png" alt="链路层的地位"></li>
+</ul>
+<h2 id="链路层使用的信道"><a href="#链路层使用的信道" class="headerlink" title="链路层使用的信道"></a>链路层使用的信道</h2>
+<ul>
+<li><strong>点对点信道：<strong>这种信道使用</strong>一对一的点对点</strong>通信方式。主要使用<strong>PPP协议</strong>。</li>
+<li><strong>广播信道：<strong>这种信道使用</strong>一对多的广播</strong>通信方式，因此过程比较复杂。广播信道上连接的主机很多，因此必须使用专用的<strong>共享信道协议</strong>来协调这些主机的数据发送。主要使用<strong>MAC协议。</strong></li>
+<li>MAC协议分类
+<ul>
+<li>信道划分：TDMA（时分）、FDMA（频分）、CDMA（码分）</li>
+<li>随机访问</li>
+<li>依次轮流</li>
+</ul>
+</li>
+</ul>
+<h2 id="LANs"><a href="#LANs" class="headerlink" title="LANs"></a>LANs</h2>
+<ul>
+<li>MAC地址：主机的固定地址，用于使帧从一个网卡传递到与其物理连接的另一个网卡</li>
+<li>ARP（<strong>Address Resolution Protocol</strong>）:将IP地址映射到MAC地址的协议,当一台主机需要发送数据到另一台主机时，它需要知道目标主机的MAC地址才能发送数据帧到正确的目标。ARP就是用来解决这个问题的。
+<ul>
+<li><strong>工作原理：</strong> 当一台主机知道目标主机的IP地址但不知道其MAC地址时，它会发送一个ARP请求广播到本地网络上，请求包含了目标IP地址。其他主机收到这个ARP请求后，如果发现自己的IP地址与请求中的目标IP地址匹配，就会向发送方回复一个ARP响应，包含了自己的MAC地址。</li>
+<li><strong>ARP请求（ARP Request）：</strong> ARP请求是以广播形式发送的，包含了请求方的IP地址和MAC地址，以及目标IP地址。广播的目的是为了确保所有网络中的主机都能收到这个请求，并且只有目标主机能够回复。</li>
+<li><strong>ARP响应（ARP Reply）：</strong> 当一台主机收到ARP请求后，如果发现自己的IP地址与请求中的目标IP地址匹配，就会向请求方回复一个ARP响应，包含了自己的IP地址和MAC地址。这样，请求方就知道了目标主机的MAC地址，可以将数据发送到正确的目标。</li>
+<li><strong>缓存（ARP Cache）：</strong> 主机在收到ARP响应后，会将目标IP地址和MAC地址的映射关系存储在本地的ARP缓存中，以便将来使用。这样，如果再次需要向同一目标发送数据，就不需要再次发送ARP请求，而是直接使用缓存中的映射关系。</li>
+</ul>
+</li>
+</ul>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 2542608082@qq.com </span>
     </div>
