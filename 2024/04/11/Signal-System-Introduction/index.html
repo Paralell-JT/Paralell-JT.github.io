@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>OS_第一章绪论 | TanJ_Blog</title>
-  <meta name="keywords" content=" OS ">
-  <meta name="description" content="OS_第一章绪论 | TanJ_Blog">
+  <title>Signal&amp;System_Introduction | TanJ_Blog</title>
+  <meta name="keywords" content=" Signal&amp;System ">
+  <meta name="description" content="Signal&amp;System_Introduction | TanJ_Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="LinkLayer 链路层概述  链路层的功能：从一个节点通过链路将数据报发送到相邻的物理节点 不同的链路协议提供不同的服务 **数据单元是数据帧，**将数据包封装在帧中，在帧的头部使用MAC地址来标识源和目标 流量控制:使得相邻的发送和接收方节点的速度匹配 错误检测：差错由信号衰减和噪声引起 差错纠正：接收端检查和纠正bit错误，不通过重传来纠正错误 半双工和全双工：链路可以双向传输，但一次只有">
 <meta property="og:type" content="article">
@@ -452,9 +452,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-OS-第一章绪论" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Signal-System-Introduction" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">OS_第一章绪论</h1>
+        <h1 class="article-title">Signal&amp;System_Introduction</h1>
     
     <div class="article-meta">
         
@@ -464,7 +464,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="OS">OS</a>
+            <a  data-rel="Signal&amp;System">Signal&amp;System</a>
             
         </span>
         
@@ -472,19 +472,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">OS</a>
+            <a class="color4">Signal&amp;System</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-02-27 21:44:25'>2024-02-27 21:18</time>
+            Created At : <time class="date" title='Updated At: 2024-04-11 19:48:46'>2024-04-11 19:32</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:2.1k</span>
+        <span>Count:0</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -514,7 +514,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA"><span class="toc-text">第一章-操作系统引论</span></a></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -530,268 +530,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="第一章-操作系统引论"><a href="#第一章-操作系统引论" class="headerlink" title="第一章-操作系统引论"></a>第一章-操作系统引论</h1>
-<ul>
-<li>操作系统的目标
-<ul>
-<li>方便性</li>
-<li>有效性</li>
-<li>可扩充性</li>
-<li>开放性</li>
-</ul>
-</li>
-<li>操作系统的作用
-<ul>
-<li>OS作为用户与计算机硬件系统之间的接口 <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-788884-561960.jpg" alt>
-<ul>
-<li>命令方式</li>
-<li>系统调用方式</li>
-<li>图标-窗口方式</li>
-</ul>
-</li>
-<li>OS作为计算机系统资源的管理者
-<ul>
-<li>计算机资源可以分为：处理机</li>
-<li>存储器</li>
-<li>IO设备</li>
-<li>文件（数据和程序）</li>
-</ul>
-</li>
-<li>OS实现了对计算机资源的抽象 <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-840965-484545.jpg" alt>
-<ul>
-<li>完全无软件的计算机系统(即裸机)难于使用</li>
-<li>I/O设备管理软件实现对I/O设备操作的细节，并向上 <strong>将I/O设备抽象为一组数据结构</strong> 以及 <strong>一组I/O操作命令，如read和write</strong></li>
-<li>用户利用这些数据结构及操作命令进行数据输入或输出，无需关心I/O是如何具体实现的</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>操作系统的发展过程
-<ul>
-<li>未配置OS的计算机系统
-<ul>
-<li>人工操作方式：特点用户独占全机，CPU等待人工操作，装（卸）卡带。 <strong>人机矛盾</strong> ：人工操作方式与资源利用率之间的矛盾</li>
-<li>@脱机IO方式 ： <strong>为了缓解人机矛盾，以及CPU与IO设备之间速度不匹配</strong> <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-257340-111976.jpg" alt>
-<ul>
-<li>程序和数据的IO都是在外围机（脱离主机）完成，故为 <strong>脱机模式</strong></li>
-<li>减少了CPU的空闲时间</li>
-<li>提高了IO速度，CPU由高速磁带存取数据</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>单道批处理系统：在 <strong>脱机IO方式上</strong> 加入了 <strong>批处理系统</strong> ，但是内存中只保留一道作业，故为 <strong>单道批处理系统</strong> <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-89885-476839.jpg" alt>
-<ul>
-<li>单道批处理系统的 <strong>主要缺点</strong> ：系统资源得不到充分利用
-<ul>
-<li>内存中仅有一道程序</li>
-<li>CPU需要等待IO请求完成，CPU利用率显著降低</li>
-<li>IO设备的低速性降低CPU利用率</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>多道批处理系统： <strong>进一步的提高了资源的利用率以及系统吞吐量</strong> ， <strong>内存中装有多道作业，多道程序交替运行</strong> <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-339965-400481.jpg" alt>
-<ul>
-<li>多道批处理系统的系统特征
-<ul>
-<li>多道性：内存中多道作业，允许并发</li>
-<li>无序性：作业完成顺序与进入内存的顺序无关</li>
-<li><strong>调度性</strong>
-<ul>
-<li>作业调度</li>
-<li>进程调度</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>多道批处理系统的优点
-<ul>
-<li><strong>资源利用率高：多道程序交替运行</strong></li>
-<li><strong>系统吞吐量大：①CPU和其他资源保持忙碌状态 ②仅当作业完成时或运行不下去时才进行调度，系统开销小</strong></li>
-</ul>
-</li>
-<li>多道批处理系统的缺点
-<ul>
-<li><strong>平均周转时间长：作业要排队依次处理，故周转时间较长</strong></li>
-<li><strong>无交互能力，一旦作业提交，用户无法与作业进行交互，修改与调试麻烦</strong></li>
-</ul>
-</li>
-<li>多道批处理系统需要解决的问题： <strong>为了解决如下问题，在计算机系统中增加一组软件，正是这样的一组软件构成了OS，据此，把OS定义为：操作系统是一组能有效地组织和管理计算机软硬件资源，合理地对各类作业进行调度，以及方便用户使用的程序的集合。</strong>
-<ul>
-<li>处理机争用问题</li>
-<li>内存分配和保护问题</li>
-<li>IO设备分配问题</li>
-<li>文件的组织和管理问题</li>
-<li>作业管理问题</li>
-<li>用户与系统的接口问题</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>分时系统： <strong>为了满足人机交互的需求</strong> ：在一台主机上连接了多个配有显示器和键盘的终端并由此组成的系统，该系统允许多个用户同时通过自己的终端以交互方式使用计算机，共享主机中的资源。
-<ul>
-<li>分时系统实现中的关键问题
-<ul>
-<li>及时接收：连接多个终端，为每个终端配置缓冲区</li>
-<li>及时处理：各个用户的作业都必须驻留在内存中，并可以频繁获得处理机
-<ul>
-<li><strong>作业直接进入内存</strong></li>
-<li><strong>采用轮转运行方式，引入了时间片的概念</strong></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>分时系统的特征：
-<ul>
-<li><strong>多路性</strong> ：宏观上多个用户同时工作共享资源，微观上每个用户作业轮流运行一个时间片</li>
-<li><strong>独立性</strong> ：各用户在各自终端上独立操作，互不干扰</li>
-<li><strong>及时性</strong> ：响应时间短</li>
-<li><strong>交互性</strong> ：用户通过终端与系统交互</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>实时系统：指系统能 <strong>及时响应</strong> 外部事件的请求，在 <strong>规定时间内</strong> 完成对该事件的处理
-<ul>
-<li>实时系统的类型：
-<ul>
-<li>工业武器控制系统</li>
-<li>信息查询系统</li>
-<li>多媒体系统</li>
-<li>嵌入式系统</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>实时系统与分时系统特征的比较
-<ul>
-<li>多路性
-<ul>
-<li>信息查询系统和分时系统中，按分时原则为多个终端用户服务</li>
-<li>实时控制系统中，采集多路现场信息，控制多个对象或执行机构</li>
-</ul>
-</li>
-<li>独立性
-<ul>
-<li>信息查询系统中，每个终端用户在与系统交互时彼此相互独立</li>
-<li>实时控制系统中，对信息的采集和对对象的控制也彼此互不干扰</li>
-</ul>
-</li>
-<li>及时性
-<ul>
-<li>信息查询系统和多媒体系统：依据人所能接受的等待时间确定</li>
-<li>实时控制系统：以控制对象所要求的截止时间来确定</li>
-</ul>
-</li>
-<li>交互性
-<ul>
-<li>分时系统：能向终端用户提供数据处理、资源共享等服务</li>
-<li>实时系统：仅限于访问系统中专用服务或发送特定的命令</li>
-</ul>
-</li>
-<li>可靠性
-<ul>
-<li>分时系统要求系统可靠</li>
-<li>实时系统要求系统高度可靠</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>微机操作系统的发展
-<ul>
-<li>单用户单任务操作系统
-<ul>
-<li>最简单的微机操作系统，主要配置在8位和16位微机</li>
-<li>最有代表性的系统是：CP/M（8位）和MS-DOS（16位）</li>
-</ul>
-</li>
-<li>单用户多任务操作系统：只允许一个用户上机，但允许用户把程序分为若干个任务，使它们并发执行，从而有效地改善了系统的性能。</li>
-<li>多用户多任务操作系统
-<ul>
-<li>UNIX</li>
-<li>Solaris</li>
-<li>LINUX</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>操作系统的功能与特征
-<ul>
-<li>操作系统的基本特性
-<ul>
-<li>并发
-<ul>
-<li><strong>并行性</strong> 指的是两个或多个事件在同一时刻发生（ <strong>微观概念</strong> ）</li>
-<li><strong>并发性</strong> 指的是两个或多个事件在同一时间间隔发生（ <strong>宏观概念</strong> ）</li>
-<li>引入进程：进程指的是在系统中能 <strong>独立运行并作为资源分配</strong> 的基本单位</li>
-</ul>
-</li>
-<li>共享
-<ul>
-<li>互斥共享方式</li>
-<li>同时访问方式</li>
-</ul>
-</li>
-<li>虚拟
-<ul>
-<li><strong>时分复用技术：利用处理机的空闲时间运行其他程序，提高处理机的利用率</strong>
-<ul>
-<li>虚拟处理机技术</li>
-<li>虚拟设备技术</li>
-</ul>
-</li>
-<li><strong>空分复用技术：利用存储器的空闲空间分区域存放和运行多道程序，提高内存的利用率</strong></li>
-</ul>
-</li>
-<li><strong>异步：多道程序环境下，多个进程并发执行，进程的执行“走走停停的情况”</strong></li>
-</ul>
-</li>
-<li>操作系统的主要功能
-<ul>
-<li>处理机管理功能</li>
-<li>存储器管理功能</li>
-<li>设备管理功能</li>
-<li>文件管理功能</li>
-<li>与用户之间的接口</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>操作系统的结构设计
-<ul>
-<li>无结构OS（整体系统结构）：早期OS的规模很小，只有几十KB</li>
-<li>模块化结构OS <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-918807-104678.jpg" alt></li>
-<li>分层式结构OS <img src="/2024/02/27/OS-%E7%AC%AC%E4%B8%80%E7%AB%A0%E7%BB%AA%E8%AE%BA/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E8%AE%BA-%E5%B9%95%E5%B8%83%E5%9B%BE%E7%89%87-46882-131619.jpg" alt>
-<ul>
-<li>分层式结构的基本概念
-<ul>
-<li>将模块-接口法中“决策顺序”的无序性变为有序性</li>
-<li>在目标系统An和裸机系统(又称宿主系统)A0之间铺设若干个层次的软件A1、A2、A3、…、An-1，使An通过An-1、An-2、…、A2、A1层，最终能在A0上运行。在操作系统中，常采用自底向上法来铺设这些中间层</li>
-<li>优点：易保证系统的正确性；易扩充和易维护</li>
-<li>缺点：系统效率降低。由于层次结构是分层单向依赖的，必须在每层之间都建立层次间的通信机制，OS每执行一个功能，通常要自上而下地穿越多个层次，这无疑会增加系统的通信开销，从而导致系统效率的降低</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>微内核OS（待补充）
-<ul>
-<li>基本概念
-<ul>
-<li>足够小的内核</li>
-<li>基于客户/服务器模式</li>
-<li>应用“机制与策略分离”原理</li>
-<li>采用面向对象技术</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
+        
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 2542608082@qq.com </span>
     </div>
